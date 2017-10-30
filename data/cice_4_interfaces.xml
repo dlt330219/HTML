@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<Component component_id="4">
+    <import_interfaces />
+    <export_interfaces>
+        <interface name="send_data_to_CPL" id="150994944">
+            <fields />
+            <field name="t" field_id="117440516" />
+            <field name="ifrac" field_id="117440517" />
+            <timers>
+                <timer frequency_count="3" frequency_unit="days" delay_count="0" />
+                <timer frequency_count="3" frequency_unit="days" delay_count="0" />
+            </timers>
+        </interface>
+    </export_interfaces>
+</Component>

@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<Component component_id="7">
+    <import_interfaces>
+        <interface name="receive_data_from_CPL" id="150994947">
+            <fields />
+            <field name="t" field_id="117440523" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="72000" />
+            </timers>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface name="send_data_to_CPL" id="150994946">
+            <fields />
+            <field name="tbot" field_id="117440522" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="72000" />
+            </timers>
+        </interface>
+    </export_interfaces>
+</Component>

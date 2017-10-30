@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<Component component_id="5">
+    <import_interfaces />
+    <export_interfaces>
+        <interface name="send_TS" id="150994944">
+            <fields />
+            <field name="t" field_id="117440516" />
+            <timers>
+                <timer frequency_count="3" frequency_unit="days" delay_count="0" />
+            </timers>
+        </interface>
+    </export_interfaces>
+</Component>
