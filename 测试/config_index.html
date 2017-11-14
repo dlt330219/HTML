@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Configuration</title>
+<link href="css/config.css" rel="stylesheet" type="text/css"/>
+<script src="javascript/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="javascript/cofig.js"></script>
+<script type="text/javascript" src="javascript/FileSaver.js"></script>
+<script type="text/javascript" src="javascript/write_xml.js"></script>
+<script type="text/javascript">
+$(document).bind("click",function(e){
+	var e = e || window.event;
+	var target = $(e.target) || $(e.srcElement);
+	$(".xmlDropdownMenu").each(function(index, element) {
+		if(!$(this).hasClass("undisplay") && $(this).prev() != target && $(this).prev().prev() != target){
+			$(this).addClass('undisplay'); 
+		}
+	});
+	$(".dropdownMenu").each(function(index, element) {
+        if(!$(this).hasClass("undisplay")){
+			$(this).addClass('undisplay'); 
+		}
+    });
+	if(target.attr('id') == 'fileTypeInput' || target.attr('id') == 'fileTypeSelectButton'){
+		if($('#fileTypeMenu').hasClass('undisplay'))
+			$('#fileTypeMenu').removeClass('undisplay');
+	}
+	if(target.attr('id') == 'nameInput'){
+		target.next().next().removeClass('undisplay');
+	}
+	if(target.attr('id') == 'statusSelectButton' || target.attr('id') == 'defaultSelectButton'){
+		target.next().removeClass('undisplay');
+	}
+		
+})
+</script>
+</head>
+
+<body>
+
+<div class="navbar">
+	<span class="navTitle">Config</span>
+</div>
+<div class="config">
+<div class="container custom-scroll">
+	<form id="config-form"  class="configform">
+      <div class="topform">
+        	<div class="form-span1">
+        		<div>
+                	<label for="fileTypeInput" class="control-label">
+                		<font color="red">*</font>
+                    	config
+                    </label>
+                	<div class="dropdown">
+                	    <input type="text" id="fileTypeInput" name="fileTypeInput" class="fileTypeInput form-control" placeholder="select the configuration file type" autocomplete="off"/>
+                        <button id="fileTypeSelectButton" type="button" class="dropdownSelect btn ">
+                        	<span class="caret"></span>
+                        </button>
+                        
+               	    </div>
+                </div>
+        	</div>
+            <div class="form-span1">
+        		<div>
+                	<label for="upload" class="control-label" style="width:163px; padding-right:20px;">
+                    	upload the local file: 
+                    </label>
+                    <input type="file" id="upload" name="upload" accept=".xml" style="padding-top:5px;"/>
+                    <button id="submit-upload" type="button" class="btn btn-primary form-button-submit" style="min-width:60px; width: 52px; min-width: 40px; padding-left: 2px; height: 25px; padding-top: 2px;"> upload </button>
+                </div>
+        	</div>
+        </div>
+        
+        <div class="fieldsSplit"></div>
+        
+        <div class="bottomform">
+        	<div id="xml_interface" class="undisplay" style="margin-bottom:80px;">
+          	<div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit">
+                	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                	</span>
+                	import_interface
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+        		<div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                		<font color="red">*</font>
+                    	name
+                    </label>
+                	<div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+        		</div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px;">
+            	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	import_connection
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	
+            	<span id="xmlItem" class="xmlItem" style="padding-left:56px">
+                <span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	fields
+            	</span>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            default
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="defaultSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	
+            	<span id="xmlItem" class="xmlItem" style="padding-left:56px">
+                <span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	components
+            	</span>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            default
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="defaultSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+          	</div>
+            <div class="nodeSplit"></div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItem">
+                <span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	local_grids
+            	</span>
+          	</div>
+            <div  id="xmlNode" class="xmlNode" style="height: 85px;">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px;">
+                	grids_entry
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red" style="float:left">*</font>
+                            local_grid_name
+                        </label>
+                        <div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+               	</div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red" style="float:left">*</font>
+                            another_comp_full_name
+                        </label>
+                        <div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+               	</div>
+                <div class="xmlSpan" style="margin-left: 260px;">
+                        <label for="nameInput" class="control-label">
+                            <font color="red" style="float:left">*</font>
+                            another_comp_grid_name
+                        </label>
+                        <div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+               	</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItem" style="width: 210px;">
+                	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                	</span>
+                	component_full_names_sets
+            	</span>
+          	</div>
+            <div  id="xmlNode" class="xmlNode" style="height: 60px;">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px; word-wrap:break-word;">
+            	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	component_full_names_set
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                		<font color="red">*</font>
+                    	keyword
+                    </label>
+                	<div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+        		</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:56px;">
+                	component_entry
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                		<font color="red" style="float:left">*</font>
+                    	comp_full_name
+                    </label>
+                	<div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+        		</div>
+          	</div>
+            <div class="nodeSplit"></div>
+            </div>
+        </div>
+        <div id="xml_remapping" class="undisplay" style="margin-bottom:80px;">
+          	<div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit" style=" width:184px;">
+                	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                	</span>
+                	remapping_setting
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px; width:184px;">
+            	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	remapping_algorithms
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            status
+                        </label>
+                        <div class="xmlDropdown">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlSelectInput form-control" placeholder="select the node status" autocomplete="off"/>
+                            <button id="statusSelectButton" type="button" class="selectButton">
+                                <span class="caret"></span>
+                            </button>
+                        </div>
+               	</div>
+          	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	
+            	<span id="xmlItem" class="xmlItem" style="padding-left:56px; width:184px;">
+                <span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	H2D_algorithm
+            	</span>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            name
+                        </label>
+                        <div class="xmlText">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="select the node status" autocomplete="off"/>
+                        </div>
+               	</div>
+          	</div>
+            <div id="xmlNode" class="xmlNode">
+            	<span class="xmlItemEdit" style="padding-left:84px; width:184px;">
+                	parameter
+                </span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                    	<button id="fieldadd" type="button" class="xmlEditButton">+</button>
+                        <button id="fielddel" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                    	<font color="red">*</font>
+                        name
+                    </label>
+                    <div class="xmlText">
+                    	<input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off">
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                    	<font color="red">*</font>
+                        value
+                    </label>
+                    <div class="xmlText">
+                    	<input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div  id="xmlNode" class="xmlNode">
+            	
+            	<span id="xmlItem" class="xmlItem" style="padding-left:56px; width:184px;">
+                <span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	V1D_algorithm
+            	</span>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red">*</font>
+                            name
+                        </label>
+                        <div class="xmlText">
+                            <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="select the node status" autocomplete="off"/>
+                        </div>
+               	</div>
+          	</div>
+            <div id="xmlNode" class="xmlNode">
+            	<span class="xmlItemEdit" style="padding-left:84px; width:184px;">
+                	parameter
+                </span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                    	<button id="fieldadd" type="button" class="xmlEditButton">+</button>
+                        <button id="fielddel" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                    	<font color="red">*</font>
+                        name
+                    </label>
+                    <div class="xmlText">
+                    	<input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off">
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                    	<font color="red">*</font>
+                        value
+                    </label>
+                    <div class="xmlText">
+                    	<input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+         </div>
+	</form>
+     <div id="save_name" class="form-span1 undisplay" style=" width:100%">
+        		<div>
+                	<label for="fileName" class="control-label" style="padding-left:20px; font-size:16px;">
+                    	file name: 
+                    </label>
+                	<div class="dropdown" style="width:80%">
+                	    <input type="text" id="fileName" name="fileName" class="fileTypeInput form-control" placeholder="input the file name" style="width:100%"/>
+               	    </div>
+                </div>
+        	</div>
+</div>
+
+<div id="form_operation" class="form-operation undisplay">
+	<button id="submit-btn" type="button" class="btn btn-primary form-button-submit"> save </button>
+	<!--<button id="submit-addnext" type="button" class="btn btn-primary form-button-submit"> save as </button>-->
+	<button id="cancel-btn" type="button" class="btn btn-default form-button-cancel"> check </button>
+</div>
+</div>
+
+</body>
+</html>

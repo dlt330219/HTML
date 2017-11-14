@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<root>
+<component_import_interfaces_configuration>
+   <import_interface  name="receive_ATM_data"  status="on">
+       <import_redirection status="on">
+           <fields status="on" default="all">
+           </fields>
+           <components status="on" default="off">
+              <component comp_full_name="c_coupler@ccpl_nest_component_1" interface_name="send_ATM_data"/>
+           </components>
+       </import_redirection>
+       <import_redirection status="off">
+           <fields status="on" default="off">
+           </fields>
+       </import_redirection>
+   </import_interface>
+</component_import_interfaces_configuration>
+</root>

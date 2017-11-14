@@ -1,0 +1,27 @@
+{
+comp_rela:[
+  {source: "clm", target: "licom", rela:"interface1->interface2"},
+  {source: "cice", target: "licom_nest_component_2", rela:"value1->value2"},
+  {source: "licom", target: "cice",  rela:"interface1->interface2"},
+  {source: "licom_nest_component_2", target: "licom",  rela:"value1->value2"},
+  {source: "licom_nest_component_1", target: "gamil",  rela:"value1->value2"},
+  {source: "gamil", target: "gamil_nest_component_2", rela:"interface1->interface2"},
+  {source: "gamil_nest_component_2", target: "gamil", rela:"value1->value2"},
+  {source: "gamil_nest_component_1", target: "cice", rela:"value1->value2"},
+  {source: "c_coupler", target: "clm", rela:"interface1->interface2"},
+  {source: "c_coupler", target: "cice", rela:"value1->value2"},
+  {source: "c_coupler", target: "gamil_nest_component_1", rela:"value1->value2"},
+  {source: "c_coupler", target: "licom", rela:"interface1->interface2"},
+  {source: "c_coupler", target: "gamil", rela:"value1->value2"},
+  {source: "clm", target: "gamil", rela:"interface1->interface2"},
+];
+clm_cice = [
+  {source: "clm", target: "licom", rela:"interface1->interface2"},
+  {source: "cice", target: "licom_nest_component_2", rela:"value1->value2"},
+  {source: "licom", target: "cice",  rela:"interface1->interface2"},
+  {source: "licom_nest_component_2", target: "licom",  rela:"value1->value2"},
+  {source: "c_coupler", target: "licom", rela:"interface1->interface2"},
+  {source: "c_coupler", target: "gamil", rela:"value1->value2"},
+  {source: "clm", target: "gamil", rela:"interface1->interface2"}
+];
+}

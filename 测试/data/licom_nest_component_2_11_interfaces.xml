@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<Component component_id="11">
+    <import_interfaces>
+        <interface name="receive_ATM_data" id="150994949">
+            <fields />
+            <field name="tbot" field_id="117440529" />
+            <timers>
+                <timer frequency_count="3" frequency_unit="days" delay_count="0" />
+            </timers>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface name="send_OCN_data" id="150994948">
+            <fields />
+            <field name="t" field_id="117440528" />
+            <timers>
+                <timer frequency_count="3" frequency_unit="days" delay_count="0" />
+            </timers>
+        </interface>
+    </export_interfaces>
+</Component>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<root>
+<component_import_interfaces_configuration>
+	<import_interface name="gff" status="on" >
+		<import_redirection status="offfn" >
+			<fields status="on" default="off" >
+			</fields>
+			<components status="on" default="remain" >
+			</components>
+		</import_redirection>
+	</import_interface>
+	<import_interface name="gffeee" status="on" >
+		<import_redirection status="on" >
+			<fields status="on" default="remain" >
+			</fields>
+			<components status="on" default="all" >
+			</components>
+		</import_redirection>
+	</import_interface>
+</component_import_interfaces_configuration>
+</root>
