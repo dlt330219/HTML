@@ -3,10 +3,9 @@
 <local_import_interfaces>
    <import_interface  name="receive_from_OCN"  status="on">
        <import_connection status="on">
-           <fields status="on" default="all">
+           <fields status="on" default="remain">
            </fields>
-           <components status="on" default="off">
-              <component comp_full_name="licom" />
+           <components status="on" default="remain">
            </components>
        </import_connection>
        <import_connection status="off">
@@ -57,18 +56,18 @@
 
 
 <local_grids>
-    <entry local_grid_name="remote_atm_grid"  another_comp_full_name="gamil"   another_comp_grid_name="gamil_H2D_grid" />
+    <grids_entry local_grid_name="remote_atm_grid"  another_comp_full_name="gamil"   another_comp_grid_name="gamil_H2D_grid" />
 </local_grids>
 
 
 <component_full_names_sets>
    <component_full_names_set  status="on" keyword="external_comps_for_atm_interface" >
-       <entry comp_full_name="gamil"/>
+       <component_entry comp_full_name="gamil"/>
    </component_full_names_set>
    <component_full_names_set  status="on" keyword="external_comps_for_coupling_generation" >
-       <entry comp_full_name="gamil" />
-       <entry comp_full_name="licom" />
-       <entry comp_full_name="c_coupler" />
+       <component_entry comp_full_name="gamil" />
+       <component_entry comp_full_name="licom" />
+       <component_entry comp_full_name="c_coupler" />
    </component_full_names_set>
 </component_full_names_sets>
 

@@ -1,7 +1,31 @@
 $(function(){
+	var after_str = "";
+	function uploadFile(node){
+		var name = $(node).attr('full_name');
+		var type = $(node).attr('comp_type');
+		var processes = $(node).attr('processes');
+		after_str += '<li>' + name + '</br>type:' + type + '</br>processes:' + processes;
+		
+		var length = $(node).children().length;
+		$(node).children().each(function(index, element) {
+			if(index == 0) after_str += '<ul>';
+			uploadFile($(node).children().get(index));
+			if(index == length - 1)
+				after_str += '</ul>';
+			after_str += '</li>';
+		});
+	}
 	function parseXmlStr(xmlStr){
-	alert(xmlStr);
-	//$('#beer').after('<li>fjfjfj<ul><li>dfdfd</li><li>gdgdfs</li></ul></li>')
+	try{
+		var xml = $.parseXML(xmlStr);
+	}catch(err){
+		alert("Plese upload a well-formed xml file!");
+		window.location.reload();
+		return;
+	}
+	uploadFile($(xml).find('Online_Model').get(0))
+	//alert(after_str);
+	$('#org').append(after_str);
 	$("#org").jOrgChart({
             chartElement : '#chart',
             dragAndDrop  : true

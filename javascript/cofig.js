@@ -97,7 +97,7 @@ $(function(){
 				edit.addClass('undisplay');
 		}
 	})
-	var isFieldsFold = false, isCompFold = false, isDirectionFold = false, isInterfaceFold = false;
+	var isFieldsFold = false, isCompFold = false, isDirectionFold = false, isInterfaceFold = false, isInterfacesFold = false, isGridsFold = false,isCompSetsFold = false, isCompSetFold = false;
 	function fold(node){
 		if(node.children('span').children('.unfold').hasClass('undisplay')){
 			node.children('span').children('.unfold').removeClass('undisplay');
@@ -147,6 +147,75 @@ $(function(){
 			nextNode = nextNode.next();
 		}
 	};
+	function foldInterface(nextNode){
+		while($.trim(nextNode.children('span').text()) != 'import_interface' && !nextNode.hasClass('nodeSplit')){
+			if(!isInterfaceFold){
+				if($.trim(nextNode.children('span').text()) == 'import_connection' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldDirection(nextNode.next());
+				}
+			}
+			else{
+				if(!nextNode.hasClass('undisplay')){
+					nextNode.addClass('undisplay');
+				}
+			}
+			nextNode = nextNode.next();
+			
+		}
+	};
+	function foldInterfaces(nextNode){
+		while(!nextNode.hasClass('nodeSplit') && $.trim(nextNode.next().children('span').text()) != 'local_grids' ){
+			if(!isInterfacesFold){
+				if($.trim(nextNode.children('span').text()) == 'import_interface' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldInterface(nextNode.next());
+				}
+			}
+			else{
+				if(!nextNode.hasClass('undisplay')){
+					nextNode.addClass('undisplay');
+				}
+			}
+			nextNode = nextNode.next();
+			
+		}
+	};
+	function foldGrids(nextNode){
+		while(!nextNode.hasClass('nodeSplit')){
+			if(isGridsFold && !nextNode.hasClass('undisplay'))
+				nextNode.addClass('undisplay');
+			if(!isGridsFold && nextNode.hasClass('undisplay'))
+				nextNode.removeClass('undisplay');
+			nextNode = nextNode.next()
+		}
+	};
+	function foldCompSet(nextNode){
+		while($.trim(nextNode.children('span').text()) == 'component_entry'){
+			if(isCompSetFold && !nextNode.hasClass('undisplay'))
+				nextNode.addClass('undisplay');
+			if(!isCompSetFold && nextNode.hasClass('undisplay'))
+				nextNode.removeClass('undisplay');
+			nextNode = nextNode.next()
+		}
+	};
+	function foldCompSets(nextNode){
+		while($.trim(nextNode.children('span').text()) == 'component_full_names_set' || $.trim(nextNode.children('span').text()) == 'component_entry'){			
+			if(!isCompSetsFold){
+				if($.trim(nextNode.children('span').text()) == 'component_full_names_set' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldCompSet(nextNode.next());
+				}
+			}
+			else{
+				if(!nextNode.hasClass('undisplay')){
+					nextNode.addClass('undisplay');
+				}
+			}
+			nextNode = nextNode.next();
+		}
+	};
+	
 	$('[id = xmlItem]').bind({
 		click:function(){
 			var nodeName = $.trim($(this).text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
@@ -167,31 +236,36 @@ $(function(){
 			}
 			if(nodeName == 'import_interface'){
 				isInterfaceFold = !isInterfaceFold;
-				while($.trim(nextNode.children('span').text()) != 'import_interface' && !nextNode.hasClass('nodeSplit')){
-					if(!isInterfaceFold){
-						if($.trim(nextNode.children('span').text()) == 'import_connection' && nextNode.hasClass('undisplay')){
-							nextNode.removeClass('undisplay');
-							foldDirection(nextNode.next());
-						}
-					}
-					else{
-						if(!nextNode.hasClass('undisplay')){
-							nextNode.addClass('undisplay');
-						}
-					}
-					nextNode = nextNode.next();
-					
-				}
+				foldInterface(nextNode);
+			}
+			if(nodeName == 'local_import_interfaces'){
+				isInterfacesFold = !isInterfacesFold;
+				foldInterfaces(nextNode);
+			}
+			if(nodeName == 'local_grids'){
+				isGridsFold = !isGridsFold;
+				foldGrids(nextNode);
+			}
+			if(nodeName == 'component_full_names_set'){
+				isCompSetFold = !isCompSetFold;
+				foldCompSet(nextNode);
+			}
+			if(nodeName == 'component_full_names_sets'){
+				isCompSetsFold = !isCompSetsFold;
+				foldCompSets(nextNode);
 			}
 		},
 	})
 	$('[id = add]').bind({
 		click:function(){
 			var nodeName = $.trim($(this).parent().parent().prev('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
-			var interface, redirection, fields, components, lastNode;
-			lastNode = $('#xml_interface').children('div:last-child').prev().prev().prev();
+			var interface, redirection, fields, components, grid_entry, componen_set, component_entry, lastNode;
+			lastNode = $('#xml_interface').children('div:last-child').prev();
+			var interface_last;
 			var interRedirection = lastNode;
 			var currentNode = $(this).parent().parent().parent();
+			var next_node = $(this).parent().parent().parent().next();
+			var next_node_name = $.trim(next_node.children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
 			$('[id = xmlNode]').each(function() {
 				var name = $.trim($(this).children('span').text());
                 if(name == 'import_interface'){
@@ -217,14 +291,28 @@ $(function(){
 					if($(components.children('div').get(1)).hasClass('undisplay'))
 						$(components.children('div').get(1)).removeClass('undisplay');
 					$(components.children('div').get(1)).children('div').children().val("");
+				} 
+				if(name == 'local_grids'){
+					interface_last = $(this).prev().prev();
+					grid_entry = $(this).next().clone(true);
+					$(grid_entry.children('div').get(1)).children('div').children().val("");
+					$(grid_entry.children('div').get(2)).children('div').children().val("");
+					$(grid_entry.children('div').get(3)).children('div').children().val("");
+				}
+				if(name == 'component_full_names_set'){
+					component_set = $(this).clone(true);
+					$(component_set.children('div').get(1)).children('div').children().val("");
+					$(component_set.children('div').get(2)).children('div').children().val("");
+					component_entry = $(this).next().clone(true);
+					$(component_entry.children('div').get(1)).children('div').children().val("");
 				}
             });
 			if(nodeName == 'import_interface'){
-				lastNode.after(components);
-				lastNode.after(fields);
-				lastNode.after(redirection);
-				lastNode.after(interface);
-				lastNode.after('<div class="nodeSplit"></div>')
+				interface_last.after(components);
+				interface_last.after(fields);
+				interface_last.after(redirection);
+				interface_last.after(interface);
+				interface_last.after('<div class="nodeSplit"></div>')
 			}
 			var temp = currentNode;
 			while(temp.next().length != 0 && !temp.next().hasClass('nodeSplit')){
@@ -238,7 +326,16 @@ $(function(){
 				interRedirection.after(fields);
 				interRedirection.after(redirection);
 			}
-			
+			if(nodeName == 'component_full_names_set'){
+				lastNode.after(component_entry);
+				lastNode.after(component_set);
+			}
+			if(nodeName == 'component_entry'){
+				currentNode.after(component_entry);
+			}
+			if(nodeName == 'grids_entry'){
+				currentNode.after(grid_entry);
+			}
 		}
 	})
 	$('[id=del]').bind({
@@ -264,11 +361,13 @@ $(function(){
 				if($.trim(temp.children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"") == 'import_connection')
 					is_del = true;
 			}
+			if(nodeName == 'component_full_names_set' && count > 1)
+				is_del = true;
 			if(is_del){
 				var nextNode = currentNode.next();
 				var temp;
 				currentNode.remove();
-				while($.trim(nextNode.children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"") != nodeName && !nextNode.hasClass('nodeSplit')){
+				while($.trim(nextNode.children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"") != "" && $.trim(nextNode.children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"") != nodeName && !nextNode.hasClass('nodeSplit')){
 					temp = nextNode;
 					nextNode = nextNode.next();
 					temp.remove()
@@ -277,11 +376,19 @@ $(function(){
 			if(nodeName == 'import_interface' && nextNode.hasClass('nodeSplit')){
 				nextNode.remove();
 			}
+			if(nodeName == 'grids_entry' && count > 1){
+				currentNode.remove();
+			}
+			if(nodeName == 'component_entry'){
+				var prevNode = $.trim(currentNode.prev().children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
+				var nextNode = $.trim(currentNode.next().children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
+				if(prevNode == nodeName || nextNode == nodeName)
+					currentNode.remove();
+			}
 		},
 	})
 	$('[id=statusSelectButton]').bind({
 		click:function(){
-			var button = $(this);
 			$(this).prev().css("border-color","#25AAE1");
 			if($(this).next('ul').length == 0){
 			$(this).after(
@@ -391,8 +498,8 @@ $(function(){
 			var input = $(this).prev();
 			selectMenu.children('ul').children('li').bind({
 			click:function(){
-			$default = $.trim($(this).text());
-			input.val($default);
+			var dafault = $.trim($(this).text());
+			$(this).parent().parent().prev().prev().val(dafault);
 			//input.attr('placeholder','');
 			if(selectMenu.hasClass("undisplay")){
 				selectMenu.removeClass("undisplay");
@@ -400,7 +507,7 @@ $(function(){
 				selectMenu.addClass("undisplay");
 			}
 			
-			if($default == 'off'){
+			if(dafault == 'off'){
 				var fold = $(this).parent().parent().parent().parent().prev().prev().children('span').children('.fold');
 				
 				var childname;
@@ -426,7 +533,7 @@ $(function(){
 				if($.trim(xmlnode.next('div').children('span').text()) != "field" 
 					&& $.trim(xmlnode.next('div').children('span').text()) != "component"){
 				var afterNode ='<div  id="xmlNode" class="xmlNode">'
-				+ '<span class="xmlItemEdit" style="padding-left:84px;">'+childname+'</span>'
+				+ '<span class="xmlItemEdit" style="padding-left:112px;">'+childname+'</span>'
 				+ '<div class="xmlEdit"><div class="undisplay">'
                 + '<button id="'+ childname + 'add" type="button" class="xmlEditButton">+</button>'
                 + '<button id="'+ childname + 'del" type="button" class="xmlEditButton">-</button></div></div>'

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<Component name ="">
+    <import_interfaces>
+        <interface interface_name="" >
+            <fields comp_full_name="">
+                <field name=""/>
+				<field name=""/>
+            </fields>
+			<fields comp_full_name="">
+                <field name=""/>
+				<field name=""/>
+            </fields>
+        </interface>
+    </import_interfaces>
+	<export_interfaces>
+        <interface interface_name="" >
+            <fields comp_full_name="">
+                <field name=""/>
+				<field name=""/>
+            </fields>
+			<fields comp_full_name="">
+                <field name=""/>
+				<field name=""/>
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

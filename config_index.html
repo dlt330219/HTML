@@ -76,8 +76,17 @@ $(document).bind("click",function(e){
         
         <div class="bottomform">
         	<div id="xml_interface" class="undisplay" style="margin-bottom:80px;">
-          	<div  id="xmlNode" class="xmlNode">
+            <div  id="xmlNode" class="xmlNode">
             	<span id="xmlItem" class="xmlItemEdit">
+                	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                	</span>
+                	local_import_interfaces
+            	</span>
+          	</div>
+          	<div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px;">
                 	<span>
                 	<b class="unfold"></b>
                     <b class="fold undisplay"></b>
@@ -113,7 +122,7 @@ $(document).bind("click",function(e){
                	</div>
           	</div>
             <div  id="xmlNode" class="xmlNode">
-            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px;">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:56px;">
             	<span>
                 	<b class="unfold"></b>
                     <b class="fold undisplay"></b>
@@ -141,7 +150,7 @@ $(document).bind("click",function(e){
           	</div>
             <div  id="xmlNode" class="xmlNode">
             	
-            	<span id="xmlItem" class="xmlItem" style="padding-left:56px">
+            	<span id="xmlItem" class="xmlItem" style="padding-left:84px">
                 <span>
                 	<b class="unfold"></b>
                     <b class="fold undisplay"></b>
@@ -175,7 +184,7 @@ $(document).bind("click",function(e){
           	</div>
             <div  id="xmlNode" class="xmlNode">
             	
-            	<span id="xmlItem" class="xmlItem" style="padding-left:56px">
+            	<span id="xmlItem" class="xmlItem" style="padding-left:84px">
                 <span>
                 	<b class="unfold"></b>
                     <b class="fold undisplay"></b>
@@ -209,46 +218,78 @@ $(document).bind("click",function(e){
           	</div>
             <div class="nodeSplit"></div>
             <div  id="xmlNode" class="xmlNode">
-            	<label class="configNode">component_grid_redirection_configuration</label>
-            	<span id="grid_entry" class="xmlItemEdit" style="width:54px; padding-top: 4px; font-size: 16px;">
-                	entry
+            	<span id="xmlItem" class="xmlItem">
+                <span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	local_grids
             	</span>
-                
-        		<div class="xmlSpan" style="width:450px">
-                	<label for="nameInput" class="control-label" style="width:117px; margin-right: 51px;">
-                		<font color="red">*</font>
-                    	local_grid_name
-                    </label>
-                	<div class="xmlText">
+          	</div>
+            <div  id="xmlNode" class="xmlNode" style="height: 85px;">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px;">
+                	grids_entry
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red" style="float:left">*</font>
+                            local_grid_name
+                        </label>
+                        <div class="xmlText">
                 	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
                	    </div>
-        		</div>
-                <div class="xmlSpan" style="width:414px">
-                        <label for="nameInput" class="control-label" style="width:164px">
-                            <font color="red">*</font>
+               	</div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
+                            <font color="red" style="float:left">*</font>
                             another_comp_full_name
                         </label>
-                        <div class="xmlDropdown">
-                            <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
-                        </div>
+                        <div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
                	</div>
-                <div class="xmlSpan" style="width: 420px; margin-left: 52px; margin-top: 20px; margin-bottom: 40px;">
-                        <label for="nameInput" class="control-label" style="width:170px">
-                            <font color="red">*</font>
+                <div class="xmlSpan" style="margin-left: 290px;">
+                        <label for="nameInput" class="control-label">
+                            <font color="red" style="float:left">*</font>
                             another_comp_grid_name
                         </label>
-                        <div class="xmlDropdown">
-                            <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
-                        </div>
+                        <div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
                	</div>
           	</div>
-            <div  id="xmlNode" class="xmlNode" style=" margin-bottom: 300px;">
-            	<label class="configNode">component_interface_tags</label>
-            	<span id="interface_entry" class="xmlItemEdit" style="width:54px; padding-top: 4px; font-size: 16px;">
-                	entry
+            <div class="nodeSplit"></div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItem" style="width: 210px;">
+                	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                	</span>
+                	component_full_names_sets
             	</span>
-				<div class="xmlSpan" style="width:450px">
-                        <label for="nameInput" class="control-label" style="width:62px; margin-right: 107px;">
+          	</div>
+            <div  id="xmlNode" class="xmlNode" style="height: 60px;">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:28px; word-wrap:break-word;">
+            	<span>
+                	<b class="unfold"></b>
+                    <b class="fold undisplay"></b>
+                </span>
+                	component_full_names_set
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                        <label for="nameInput" class="control-label">
                             <font color="red">*</font>
                             status
                         </label>
@@ -259,34 +300,37 @@ $(document).bind("click",function(e){
                             </button>
                         </div>
                	</div>
-                <div class="xmlSpan"  style="width:448px">
-                	<label for="nameInput" class="control-label" style="width:122px; margin-right:47px;">
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
                 		<font color="red">*</font>
-                    	interface_tag
-                    </label>
-                	<div class="xmlText">
-                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
-               	    </div>
-        		</div>
-                <div class="xmlSpan"  style="width: 420px; margin-left: 52px; margin-top: 20px;">
-                        <label for="nameInput" class="control-label" style="width:170px; padding-right:50px">
-                            <font color="red">*</font>
-                            comp_full_name
-                        </label>
-                        <div class="xmlDropdown">
-                            <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
-                        </div>
-               	</div>
-                 <div class="xmlSpan"  style="width:448px;margin-top: 20px; margin-left: 33px;">
-                	<label for="nameInput" class="control-label" style="width:122px; margin-right:47px;">
-                		<font color="red">*</font>
-                    	interface_name
+                    	keyword
                     </label>
                 	<div class="xmlText">
                 	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
                	    </div>
         		</div>
           	</div>
+            <div  id="xmlNode" class="xmlNode">
+            	<span id="xmlItem" class="xmlItemEdit" style="padding-left:56px;">
+                	component_entry
+            	</span>
+                <div class="xmlEdit">
+                	<div class="undisplay">
+                		<button id="add" type="button" class="xmlEditButton">+</button>
+                		<button id="del" type="button" class="xmlEditButton">-</button>
+                    </div>
+                </div>
+                <div class="xmlSpan">
+                	<label for="nameInput" class="control-label">
+                		<font color="red" style="float:left">*</font>
+                    	comp_full_name
+                    </label>
+                	<div class="xmlText">
+                	    <input type="text" id="nameInput" name="nameInput" class="xmlInput form-control" placeholder="input the node name" autocomplete="off"/>
+               	    </div>
+        		</div>
+          	</div>
+            <div class="nodeSplit"></div>
             </div>
         </div>
         <div id="xml_remapping" class="undisplay" style="margin-bottom:80px;">
@@ -460,8 +504,6 @@ $(document).bind("click",function(e){
 	<button id="cancel-btn" type="button" class="btn btn-default form-button-cancel"> check </button>
 </div>
 </div>
-<div>
 
-</div>
 </body>
 </html>

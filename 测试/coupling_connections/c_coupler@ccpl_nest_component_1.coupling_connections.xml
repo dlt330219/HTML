@@ -55,12 +55,12 @@
    </import_interface>
 </local_import_interfaces>
 <local_grids>
-    <entry local_grid_name="remote_atm_grid"  another_comp_full_name="gamil@gamil_nest_component_1"   another_comp_grid_name="gamil_H2D_grid" />
+    <grids_entry local_grid_name="remote_atm_grid"  another_comp_full_name="gamil@gamil_nest_component_1"   another_comp_grid_name="gamil_H2D_grid" />
 </local_grids>
 
 <component_full_names_sets>
    <component_full_names_set  status="on" keyword="external_comps_for_atm_interface" >
-       <entry comp_full_name="gamil@gamil_nest_component_1"/>
+       <component_entry comp_full_name="gamil@gamil_nest_component_1"/>
    </component_full_names_set>
 </component_full_names_sets>
 

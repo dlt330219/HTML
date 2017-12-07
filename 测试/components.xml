@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<Components>
+    <Online_Model full_name="ROOT" comp_type="ROOT" processes=" 0~19" parent_full_name="NULL">
+        <Online_Model full_name="FGOALS-g2" comp_type="pseudo_coupled_system" processes=" 0~19" parent_full_name="ROOT">
+            <Online_Model full_name="c_coupler" comp_type="cpl" processes=" 0~3" parent_full_name="FGOALS-g2">
+                <Online_Model full_name="c_coupler@ccpl_nest_component_2" comp_type="cpl" processes=" 0~1" parent_full_name="c_coupler" />
+                <Online_Model full_name="c_coupler@ccpl_nest_component_1" comp_type="cpl" processes=" 1~3" parent_full_name="c_coupler" />
+            </Online_Model>
+            <Online_Model full_name="gamil" comp_type="atm" processes=" 4~7" parent_full_name="FGOALS-g2">
+                <Online_Model full_name="gamil@gamil_nest_component_1" comp_type="atm" processes=" 4~7" parent_full_name="gamil" />
+                <Online_Model full_name="gamil@gamil_nest_component_2" comp_type="atm" processes=" 4~7" parent_full_name="gamil" />
+            </Online_Model>
+            <Online_Model full_name="cice" comp_type="sea_ice" processes=" 12~15" parent_full_name="FGOALS-g2" />
+            <Online_Model full_name="licom" comp_type="ocn" processes=" 8~11" parent_full_name="FGOALS-g2">
+                <Online_Model full_name="licom@licom_nest_component_2" comp_type="ocn" processes=" 8~11" parent_full_name="licom" />
+                <Online_Model full_name="licom@licom_nest_component_1" comp_type="ocn" processes=" 8~11" parent_full_name="licom" />
+            </Online_Model>
+            <Online_Model full_name="clm" comp_type="lnd" processes=" 16~19" parent_full_name="FGOALS-g2" />
+        </Online_Model>
+    </Online_Model>
+</Components>

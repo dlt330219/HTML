@@ -78,10 +78,10 @@ a:hover{
 /* Custom node styling */
 .jOrgChart .node {
 	font-size 			: 14px;
-	background-color 	: #35363B;
+	background-color 	: #4e98ea;
 	border-radius 		: 8px;
 	border 				: 5px solid darkgray;
-	color 				: #F38630;
+	color 				: #fffdfc;
 	-moz-border-radius 	: 8px;
 }
 	.node p{
