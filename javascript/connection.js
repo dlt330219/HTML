@@ -1,6 +1,7 @@
 // JavaScript Document
 $(function(){
 var links = [];
+var currentNode;
 function connection(){
 
 var nodes = {};
@@ -17,12 +18,15 @@ var force = d3.layout.force()//layout将json格式转化为力学图可用的格
     .nodes(d3.values(nodes))//设定节点数组
     .links(links)//设定连线数组
     .size([width, height])//作用域的大小
-    .linkDistance(180)//连接线长度
+    .linkDistance(200)//连接线长度
     .charge(-1500)//顶点的电荷数。该参数决定是排斥还是吸引，数值越小越互相排斥
     .on("tick", tick)//指时间间隔，隔一段时间刷新一次画面
     .start();//开始转换
-
+if($("#svg").length > 0){
+	$("#svg").remove();
+}
 var svg = d3.select("body").append("svg")
+	.attr("id","svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -55,13 +59,11 @@ var edges_line = svg.selectAll("edges_line")
     .style("stroke","#999")
     .style("stroke-width",1.0)//线条粗细
     .attr("marker-end", "url(#resolved)" )//根据箭头标记的id号标记箭头
-	/*.on("click",function(line){
-		if(get_links(links_name)==0)
-			window.open("relationship.html?name=clm_cice","","top=100,left=300,width=800,heigth=800,scrollbars=yes, resizable=yes, toolbar=no, menubar=no,  status=no");
-		else
-			window.location.href("relationship.html?name=clm_cice");
-	});*/
-
+	.on("click",function(d){
+		alert(d.rela)
+	});
+	/*
+	//设置连接线上的文字
 var edges_text = svg.append("g").selectAll(".edgelabel")
 .data(force.links())
 .enter()
@@ -70,7 +72,7 @@ var edges_text = svg.append("g").selectAll(".edgelabel")
 //.attr("class","linetext")
 .attr({  'class':'edgelabel',
                'id':function(d,i){return 'edgepath'+i;},
-               'dx':80,
+               'dx':30,
                'dy':0,
                //'font-size':10,
                'fill-opacity':0.0
@@ -79,21 +81,30 @@ var edges_text = svg.append("g").selectAll(".edgelabel")
 //设置线条上的文字
 edges_text.append('textPath')
 .attr('xlink:href',function(d,i) {return '#edgepath'+i})
-.text(function(d){return d.rela;});
+.text(function(d){return d.rela;})
+.style("display","none");*/
 
 //圆圈
 var circle = svg.append("g").selectAll("circle")
     .data(force.nodes())//表示使用force.nodes数据
     .enter().append("circle")
-    .style("fill","#68ABE4")
-    .style('stroke',"#68ABE4")
+    .style("fill",function(node){
+		if(node.name == currentNode || node.name == currentNode)
+			return "#e62f2d";
+		return "#68ABE4";	
+	})
+    .style('stroke',function(node){
+		if(node.name == currentNode || node == currentNode)
+			return "#b7acac";
+		return "#68ABE4";
+	})
     .attr("r", 28)//设置圆圈半径
 	
     .on("click",function(node){
         //单击时让连接线加粗
         edges_line.style("stroke-width",function(line){
             console.log(line);
-            if(line.source.name==node.name || line.target.name==node.name){
+            if(line.source.name == node.name || line.target.name == node.name){
                 return 4;
             }else{
                 return 0.5;
@@ -234,7 +245,8 @@ function tick() {
       var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
       return path;
   });  
-    
+  /*  
+  //连接线上注释的位置
   edges_text.attr('transform',function(d,i){
         if (d.target.x<d.source.x){
             bbox = this.getBBox();
@@ -245,7 +257,7 @@ function tick() {
         else {
             return 'rotate(0)';
         }
-   });
+   });*/
 }
 
 //设置连接线的坐标,使用椭圆弧路径段双向编码
@@ -265,6 +277,76 @@ function transform1(d) {
 function transform2(d) {
       return "translate(" + (d.x) + "," + d.y + ")";
 }
+}
+
+function uploadFile(node,import_nodes,export_nodes){
+	var comp_name = $(node).attr('name');
+	currentNode = comp_name;
+	$(import_nodes).children().each(function(index, element) {
+		var import_interface_name = $(this).attr('interface_name');
+		$(this).children().each(function(index, element) {
+			var rela = "import_interface:\n" + import_interface_name +': ';
+			$(this).children().each(function(index, element) {
+				if(index != 0)
+					rela += ", ";
+                rela += $(this).attr('name') + ' ';
+            });
+			rela += '\n';
+            var fields_node_comp_name = $(this).attr('comp_full_name');
+			var has_link = false;
+			for(var i = 0; i < links.length; i++){
+				if($.trim(links[i]["source"]) == $.trim(fields_node_comp_name) && $.trim(links[i]["target"]) == $.trim(comp_name)){
+					links[i]["rela"] += rela;
+					//alert(links[i]["rela"])
+					has_link = true;
+					break;
+				}
+			}
+			if(!has_link)
+				links.push({source: fields_node_comp_name, target: comp_name, rela: rela});
+        });
+	});
+	$(export_nodes).children().each(function(index, element) {
+		var export_interface_name = $(this).attr('interface_name');
+		$(this).children().each(function(index, element) {
+			var rela = "export_interface:\n" + export_interface_name +': ';
+			$(this).children().each(function(index, element) {
+				if(index != 0)
+					rela += ", ";
+                rela += $(this).attr('name') + ' ';
+            });
+			rela += '\n';
+            var fields_node_comp_name = $(this).attr('comp_full_name');
+			var has_link = false;
+			for(var i = 0; i < links.length; i++){
+				if($.trim(links[i]["target"]) == $.trim(fields_node_comp_name) && $.trim(links[i]["source"]) == $.trim(comp_name)){
+					links[i]["rela"] += rela;
+					//alert(links[i]["rela"])
+					has_link = true;
+					break;
+				}
+			}
+			if(!has_link)
+				links.push({source: comp_name, target: fields_node_comp_name, rela: rela});
+				
+			var link1 = '',link2 = '',a = 0,b = 0,flag = false;
+			for(var i = 0; i < links.length; i++){
+				if($.trim(links[i]["source"]) == $.trim(comp_name) && $.trim(links[i]["target"]) == $.trim(fields_node_comp_name)){
+					link1 = links[i]["rela"]
+					a = i;
+				}
+				if($.trim(links[i]["source"]) == $.trim(fields_node_comp_name) && $.trim(links[i]["target"]) == $.trim(comp_name)){
+					link2 = links[i]["rela"];
+					b = i;
+					flag = true;
+				}
+			}
+			if(flag){
+				links[a]["rela"] = link2 + link1;
+				links[b]["rela"] = link2 + link1;
+			}
+        });
+	});
 }
 function parseXmlStr(xmlStr){
 	try{
@@ -289,6 +371,11 @@ links.push({source: "c_coupler", target: "gamil_nest_component_1", rela:"value1-
 links.push({source: "c_coupler", target: "licom", rela:"interface1->interface2"})
 links.push({source: "c_coupler", target: "gamil", rela:"value1->value2"})
 links.push({source: "clm", target: "gamil", rela:"interface1->interface2"})
+	var length = links.length;
+	for (var i = 0; i < length; i++) {
+		links.pop();
+    }
+	uploadFile($(xml).find('Component').get(0),$(xml).find('import_interfaces').get(0),$(xml).find('export_interfaces').get(0));
 	//show connection
 	connection();
 }

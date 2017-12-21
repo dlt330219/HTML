@@ -97,7 +97,6 @@ $(function(){
 				edit.addClass('undisplay');
 		}
 	})
-	var isFieldsFold = false, isCompFold = false, isDirectionFold = false, isInterfaceFold = false, isInterfacesFold = false, isGridsFold = false,isCompSetsFold = false, isCompSetFold = false;
 	function fold(node){
 		if(node.children('span').children('.unfold').hasClass('undisplay')){
 			node.children('span').children('.unfold').removeClass('undisplay');
@@ -109,34 +108,42 @@ $(function(){
 			node.children('span').children('.fold').removeClass('undisplay');
 		}
 	};
-	function foldFields(nextNode){
+	function getIsFold(node){
+		if(node.children('span').children('.unfold').hasClass('undisplay')){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
+	function foldFields(nextNode,isFold){
 		while($.trim(nextNode.children('span').text()) != 'components'){
-			if(isFieldsFold && !nextNode.hasClass('undisplay'))
+			if(isFold && !nextNode.hasClass('undisplay'))
 				nextNode.addClass('undisplay');
-			if(!isFieldsFold && nextNode.hasClass('undisplay'))
+			if(!isFold && nextNode.hasClass('undisplay'))
 				nextNode.removeClass('undisplay');
 			nextNode = nextNode.next()
 		}
 	};
-	function foldComponents(nextNode){
+	function foldComponents(nextNode,isFold){
 		while($.trim(nextNode.children('span').text()) != 'import_connection' && !nextNode.hasClass('nodeSplit')){
-			if(isCompFold && !nextNode.hasClass('undisplay'))
+			if(isFold && !nextNode.hasClass('undisplay'))
 				nextNode.addClass('undisplay');
-			if(!isCompFold && nextNode.hasClass('undisplay'))
+			if(!isFold && nextNode.hasClass('undisplay'))
 				nextNode.removeClass('undisplay');
 			nextNode = nextNode.next();
 		}
 	};
-	function foldDirection(nextNode){
+	function foldDirection(nextNode,isFold){
 		while($.trim(nextNode.children('span').text()) != 'import_connection' && !nextNode.hasClass('nodeSplit')){			
-			if(!isDirectionFold){
+			if(!isFold){
 				if($.trim(nextNode.children('span').text()) == 'fields' && nextNode.hasClass('undisplay')){
 					nextNode.removeClass('undisplay');
-					foldFields(nextNode.next());
+					foldFields(nextNode.next(),getIsFold(nextNode.children('span')));
 				}
 				if($.trim(nextNode.children('span').text()) == 'components' && nextNode.hasClass('undisplay')){
 					nextNode.removeClass('undisplay');
-					foldComponents(nextNode.next());
+					foldComponents(nextNode.next(),getIsFold(nextNode.children('span')));
 				}
 			}
 			else{
@@ -147,12 +154,12 @@ $(function(){
 			nextNode = nextNode.next();
 		}
 	};
-	function foldInterface(nextNode){
+	function foldInterface(nextNode,isFold){
 		while($.trim(nextNode.children('span').text()) != 'import_interface' && !nextNode.hasClass('nodeSplit')){
-			if(!isInterfaceFold){
+			if(!isFold){
 				if($.trim(nextNode.children('span').text()) == 'import_connection' && nextNode.hasClass('undisplay')){
 					nextNode.removeClass('undisplay');
-					foldDirection(nextNode.next());
+					foldDirection(nextNode.next(),getIsFold(nextNode.children('span')));
 				}
 			}
 			else{
@@ -164,12 +171,12 @@ $(function(){
 			
 		}
 	};
-	function foldInterfaces(nextNode){
+	function foldInterfaces(nextNode,isFold){
 		while(!nextNode.hasClass('nodeSplit') && $.trim(nextNode.next().children('span').text()) != 'local_grids' ){
-			if(!isInterfacesFold){
+			if(!isFold){
 				if($.trim(nextNode.children('span').text()) == 'import_interface' && nextNode.hasClass('undisplay')){
 					nextNode.removeClass('undisplay');
-					foldInterface(nextNode.next());
+					foldInterface(nextNode.next(),getIsFold(nextNode.children('span')));
 				}
 			}
 			else{
@@ -181,30 +188,110 @@ $(function(){
 			
 		}
 	};
-	function foldGrids(nextNode){
+	function foldGrids(nextNode,isFold){
 		while(!nextNode.hasClass('nodeSplit')){
-			if(isGridsFold && !nextNode.hasClass('undisplay'))
+			if(isFold && !nextNode.hasClass('undisplay'))
 				nextNode.addClass('undisplay');
-			if(!isGridsFold && nextNode.hasClass('undisplay'))
+			if(!isFold && nextNode.hasClass('undisplay'))
 				nextNode.removeClass('undisplay');
 			nextNode = nextNode.next()
 		}
 	};
-	function foldCompSet(nextNode){
+	function foldCompSet(nextNode,isFold){
 		while($.trim(nextNode.children('span').text()) == 'component_entry'){
-			if(isCompSetFold && !nextNode.hasClass('undisplay'))
+			if(isFold && !nextNode.hasClass('undisplay'))
 				nextNode.addClass('undisplay');
-			if(!isCompSetFold && nextNode.hasClass('undisplay'))
+			if(!isFold && nextNode.hasClass('undisplay'))
 				nextNode.removeClass('undisplay');
 			nextNode = nextNode.next()
 		}
 	};
-	function foldCompSets(nextNode){
+	function foldCompSets(nextNode,isFold){
 		while($.trim(nextNode.children('span').text()) == 'component_full_names_set' || $.trim(nextNode.children('span').text()) == 'component_entry'){			
-			if(!isCompSetsFold){
+			if(!isFold){
 				if($.trim(nextNode.children('span').text()) == 'component_full_names_set' && nextNode.hasClass('undisplay')){
 					nextNode.removeClass('undisplay');
-					foldCompSet(nextNode.next());
+					foldCompSet(nextNode.next(),getIsFold(nextNode.children('span')));
+				}
+			}
+			else{
+				if(!nextNode.hasClass('undisplay')){
+					nextNode.addClass('undisplay');
+				}
+			}
+			nextNode = nextNode.next();
+		}
+	};
+	function foldRemappingFields(nextNode,isFold){
+		while(!nextNode.hasClass('nodeSplit')){
+			if(isFold && !nextNode.hasClass('undisplay'))
+				nextNode.addClass('undisplay');
+			if(!isFold && nextNode.hasClass('undisplay'))
+				nextNode.removeClass('undisplay');
+			nextNode = nextNode.next();
+		}
+	};
+	function foldVAlgo(nextNode,isFold){
+		while($.trim(nextNode.children('span').text()) == 'parameter'){
+			if(isFold && !nextNode.hasClass('undisplay'))
+				nextNode.addClass('undisplay');
+			if(!isFold && nextNode.hasClass('undisplay'))
+				nextNode.removeClass('undisplay');
+			nextNode = nextNode.next();
+		}
+	};
+	function foldHAlgo(nextNode,isFold){
+		while($.trim(nextNode.children('span').text()) == 'parameter'){
+			if(isFold && !nextNode.hasClass('undisplay'))
+				nextNode.addClass('undisplay');
+			if(!isFold && nextNode.hasClass('undisplay'))
+				nextNode.removeClass('undisplay');
+			nextNode = nextNode.next();
+		}
+	};
+	function foldHWeights(nextNode,isFold){
+		while($.trim(nextNode.children('span').text()) == 'file'){
+			if(isFold && !nextNode.hasClass('undisplay'))
+				nextNode.addClass('undisplay');
+			if(!isFold && nextNode.hasClass('undisplay'))
+				nextNode.removeClass('undisplay');
+			nextNode = nextNode.next();
+		}
+	};
+	function foldRemappingAlgo(nextNode,isFold){
+		while($.trim(nextNode.children('span').text()) != 'remapping_fields'){
+			if(!isFold){
+				if($.trim(nextNode.children('span').text()) == 'H2D_algorithm' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldHAlgo(nextNode.next(),getIsFold(nextNode.children('span')));
+				}
+				if($.trim(nextNode.children('span').text()) == 'V1D_algorithm' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldVAlgo(nextNode.next(),getIsFold(nextNode.children('span')));
+				}
+				if($.trim(nextNode.children('span').text()) == 'H2D_weights' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldHWeights(nextNode.next(),getIsFold(nextNode.children('span')));
+				}
+			}
+			else{
+				if(!nextNode.hasClass('undisplay')){
+					nextNode.addClass('undisplay');
+				}
+			}
+			nextNode = nextNode.next();
+		}
+	};
+	function foldRemappingSetting(nextNode,isFold){
+		while(!nextNode.hasClass('nodeSplit')){
+			if(!isFold){
+				if($.trim(nextNode.children('span').text()) == 'remapping_algorithms' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldRemappingAlgo(nextNode.next(),getIsFold(nextNode.children('span')));
+				}
+				if($.trim(nextNode.children('span').text()) == 'remapping_fields' && nextNode.hasClass('undisplay')){
+					nextNode.removeClass('undisplay');
+					foldRemappingFields(nextNode.next(),getIsFold(nextNode.children('span')));
 				}
 			}
 			else{
@@ -223,43 +310,54 @@ $(function(){
 			var nextNode = $(this).parent().next();
 			
 			if(nodeName == 'fields'){
-				isFieldsFold = !isFieldsFold;
-				foldFields(nextNode);
+				foldFields(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'components'){
-				isCompFold = !isCompFold;
-				foldComponents(nextNode);
+				foldComponents(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'import_connection'){
-				isDirectionFold = !isDirectionFold;
-				foldDirection(nextNode);
+				foldDirection(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'import_interface'){
-				isInterfaceFold = !isInterfaceFold;
-				foldInterface(nextNode);
+				foldInterface(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'local_import_interfaces'){
-				isInterfacesFold = !isInterfacesFold;
-				foldInterfaces(nextNode);
+				foldInterfaces(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'local_grids'){
-				isGridsFold = !isGridsFold;
-				foldGrids(nextNode);
+				foldGrids(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'component_full_names_set'){
-				isCompSetFold = !isCompSetFold;
-				foldCompSet(nextNode);
+				foldCompSet(nextNode,getIsFold($(this)));
 			}
 			if(nodeName == 'component_full_names_sets'){
-				isCompSetsFold = !isCompSetsFold;
-				foldCompSets(nextNode);
+				foldCompSets(nextNode,getIsFold($(this)));
+			}
+			if(nodeName == 'remapping_fields'){
+				foldRemappingFields(nextNode,getIsFold($(this)));
+			}
+			if(nodeName == 'H2D_algorithm'){
+				foldHAlgo(nextNode,getIsFold($(this)));
+			}
+			if(nodeName == 'V1D_algorithm'){
+				foldVAlgo(nextNode,getIsFold($(this)));
+			}
+			if(nodeName == 'H2D_weights'){
+				foldHWeights(nextNode,getIsFold($(this)));
+			}
+			if(nodeName == 'remapping_algorithms'){
+				foldRemappingAlgo(nextNode,getIsFold($(this)));
+			}
+			if(nodeName == 'remapping_setting'){
+				foldRemappingSetting(nextNode,getIsFold($(this)));
 			}
 		},
 	})
 	$('[id = add]').bind({
 		click:function(){
 			var nodeName = $.trim($(this).parent().parent().prev('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
-			var interface, redirection, fields, components, grid_entry, componen_set, component_entry, lastNode;
+			var interface, redirection, fields, components, grid_entry, componen_set, component_entry, lastNode,
+			remapping_setting,remapping_algorithms,H2D_algorithm,V1d_algorithm,H2D_weights,remapping_fields,Hparameter,Vparameter,file;
 			lastNode = $('#xml_interface').children('div:last-child').prev();
 			var interface_last;
 			var interRedirection = lastNode;
@@ -306,6 +404,47 @@ $(function(){
 					component_entry = $(this).next().clone(true);
 					$(component_entry.children('div').get(1)).children('div').children().val("");
 				}
+				
+				if(name == 'remapping_setting'){
+					remapping_setting = $(this).clone(true);
+					$(remapping_setting.children('div').get(1)).children('div').children().val("");
+				}
+				if(name == 'remapping_algorithms'){
+					remapping_algorithms = $(this).clone(true);
+					$(remapping_algorithms.children('div').get(0)).children('div').children().val("");
+				}
+				if(name == 'H2D_algorithm'){
+					H2D_algorithm = $(this).clone(true);
+					$(H2D_algorithm.children('div').get(0)).children('div').children().val("");
+					$(H2D_algorithm.children('div').get(1)).children('div').children().val("");
+				}
+				if(name == 'parameter'){
+					Hparameter = $(this).clone(true);
+					$(Hparameter.children('div').get(1)).children('div').children().val("");
+					$(Hparameter.children('div').get(2)).children('div').children().val("");
+					Vparameter = $(this).clone(true);
+					$(Vparameter.children('div').get(1)).children('div').children().val("");
+					$(Vparameter.children('div').get(2)).children('div').children().val("");
+				}
+				if(name == 'V1D_algorithm'){
+					V1D_algorithm = $(this).clone(true);
+					$(V1D_algorithm.children('div').get(0)).children('div').children().val("");
+					$(V1D_algorithm.children('div').get(1)).children('div').children().val("");
+				}
+				if(name == 'H2D_weights'){
+					H2D_weights = $(this).clone(true);
+					$(H2D_weights.children('div').get(0)).children('div').children().val("");
+				}
+				if(name == 'file'){
+					file = $(this).clone(true);
+					$(file.children('div').get(1)).children('div').children().val("");
+				}
+				if(name == 'remapping_fields'){
+					remapping_fields = $(this).clone(true);
+					$(remapping_fields.children('div').get(1)).children('div').children().val("");
+					$(remapping_fields.children('div').get(2)).children('div').children().val("");
+				}
+				
             });
 			if(nodeName == 'import_interface'){
 				interface_last.after(components);
@@ -335,6 +474,24 @@ $(function(){
 			}
 			if(nodeName == 'grids_entry'){
 				currentNode.after(grid_entry);
+			}
+			if(nodeName == 'parameter'){
+				currentNode.after(Hparameter);
+			}
+			if(nodeName == 'file'){
+				currentNode.after(file);
+			}
+			if(nodeName == 'remapping_setting'){
+				$('#xml_remapping').children('div:last-child').after(remapping_setting);
+				$('#xml_remapping').children('div:last-child').after(remapping_algorithms);
+				$('#xml_remapping').children('div:last-child').after(H2D_algorithm);
+				$('#xml_remapping').children('div:last-child').after(Hparameter);
+				$('#xml_remapping').children('div:last-child').after(V1D_algorithm);
+				$('#xml_remapping').children('div:last-child').after(Vparameter);
+				$('#xml_remapping').children('div:last-child').after(H2D_weights);
+				$('#xml_remapping').children('div:last-child').after(file);
+				$('#xml_remapping').children('div:last-child').after(remapping_fields);
+				$('#xml_remapping').children('div:last-child').after('<div class="nodeSplit"></div>')
 			}
 		}
 	})
@@ -385,6 +542,27 @@ $(function(){
 				if(prevNode == nodeName || nextNode == nodeName)
 					currentNode.remove();
 			}
+			if(nodeName == 'file' && count > 1){
+				currentNode.remove();
+			}
+			if(nodeName == 'parameter'){
+				var prevNode = $.trim(currentNode.prev().children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
+				var nextNode = $.trim(currentNode.next().children('span').text()).replace(/[\r\n]/g,"").replace(/[ ]/g,"");
+				if(prevNode == nodeName || nextNode == nodeName)
+					currentNode.remove();
+			}
+			if(nodeName == 'remapping_setting' && count > 1){
+				var nextNode = currentNode.next();
+				var temp;
+				currentNode.remove();
+				while(!nextNode.hasClass('nodeSplit')){
+					temp = nextNode;
+					nextNode = nextNode.next();
+					temp.remove()
+				}
+				nextNode.remove();
+			}
+			
 		},
 	})
 	$('[id=statusSelectButton]').bind({
@@ -518,7 +696,6 @@ $(function(){
 					if(!fold.hasClass('undisplay')){					
 						fold.addClass('undisplay');
 						fold.prev().removeClass('undisplay');
-						isFieldsFold = !isFieldsFold;
 					}
 				}
 				if(nodeText == "components"){
@@ -527,7 +704,6 @@ $(function(){
 					if(!fold.hasClass('undisplay')){					
 						fold.addClass('undisplay');
 						fold.prev().removeClass('undisplay');
-						isCompFold = !isCompFold;
 					}
 				}
 				if($.trim(xmlnode.next('div').children('span').text()) != "field" 
@@ -626,6 +802,9 @@ $(function(){
 			if(dropDownType == 'default'){
 				$(this).next().click();
 			}
+			if(dropDownType == 'specification'){
+				$(this).next().click();
+			}
 			}
 		},
 		mouseout:function(){
@@ -644,7 +823,125 @@ $(function(){
 			}
 		},
 	});
-	
+	$('[id = specSelectButton]').bind({
+		click:function(){
+			var xmlnode = $(this).parent().parent().parent();
+			var nodeText = $.trim(xmlnode.children('span').text());
+			$(this).prev().css("border-color","#25AAE1");
+			if($(this).next('ul').length == 0){
+			$(this).after(
+			'<ul class="xmlDropdownMenu undisplay"><ul class="menu defaultMenu">'
+             + '<li id="default" class="menuLi"><a href="JavaScript:void(0)" onclick="" class="menuItem"><span>default</span></a></li>'
+			 + '<li id="type" class="menuLi"><a href="JavaScript:void(0)" onclick="" class="menuItem"><span>type</span></a></li>'
+			 + '<li id="name" class="menuLi"><a href="JavaScript:void(0)" onclick="" class="menuItem"><span>name</span></a></li>'
+			 + '</ul></ul>')
+			}
+			var selectMenu = $(this).next();
+			if(selectMenu.hasClass("undisplay")){
+				selectMenu.removeClass("undisplay");
+			}else{
+				selectMenu.addClass("undisplay");
+			}
+			var input = $(this).prev();
+			selectMenu.children('ul').children('li').bind({
+			click:function(){
+			var specification = $.trim($(this).text());
+			$(this).parent().parent().prev().prev().val(specification);
+			//input.attr('placeholder','');
+			if(selectMenu.hasClass("undisplay")){
+				selectMenu.removeClass("undisplay");
+			}else{
+				selectMenu.addClass("undisplay");
+			}
+			
+			if(specification == 'type' || specification == 'name'){
+				var fold = $(this).parent().parent().parent().parent().prev().prev().children('span').children('.fold');
+				
+				var childname;
+				var name;
+				if(nodeText == "remapping_fields"){
+					childname = 'entry';
+					name = 'value';
+					if(!fold.hasClass('undisplay')){					
+						fold.addClass('undisplay');
+						fold.prev().removeClass('undisplay');
+					}
+				}
+				if($.trim(xmlnode.next('div').children('span').text()) != "entry"){
+				var afterNode ='<div  id="xmlNode" class="xmlNode">'
+				+ '<span class="xmlItemEdit" style="padding-left:56px;width:184px;">entry</span>'
+				+ '<div class="xmlEdit"><div class="undisplay">'
+                + '<button id="'+ childname + 'add" type="button" class="xmlEditButton">+</button>'
+                + '<button id="'+ childname + 'del" type="button" class="xmlEditButton">-</button></div></div>'
+				+ '<div class="xmlSpan"><label for="nameInput" class="control-label"><font color="red">*</font>value</label>'
+				+ '<div class="xmlText">'
+				+ '<input type="text" id="nameInput" name="nameInput" class="xmlInput form-control"'
+				+ ' placeholder="input the node value" autocomplete="off"/></div></div></div>';
+				xmlnode.after(afterNode);
+				$('.xmlNode').bind({
+					mouseover:function(){
+						var edit = $($(this).children('div').get(0)).children();
+						if(edit.parent().hasClass('xmlEdit') && edit.hasClass('undisplay'))
+							edit.removeClass('undisplay');
+					},
+					mouseout:function(){
+						var edit = $($(this).children('div').get(0)).children();
+						if(edit.parent().hasClass('xmlEdit') && !edit.hasClass('undisplay'))
+							edit.addClass('undisplay');
+					}
+				})
+				
+				$('#'+ childname + 'add').bind({
+					click:function(){
+						var addNode = $(this).parent().parent().parent();
+						var cloneNode = addNode.clone(true)
+						$(cloneNode.children('div').get(1)).children('div').children().val("");
+						addNode.after(cloneNode);
+					},	
+				}) 
+
+				
+				$('#' + childname + 'del').bind({
+					click:function(e){
+						var delNode = $(this).parent().parent().parent();
+						if(
+						delNode.next().children('span').text() == 'entry'
+						||delNode.prev().children('span').text() == 'entry')
+							delNode.remove();
+						else{
+							alert("Can't Delete! (when the "+ childname +"s dafault is 'off', '"+childname + "' must be filled in more than once)");
+							e.preventDefault();
+						}
+					},	
+				}) 
+			}
+			}else{
+				while($.trim(xmlnode.next('div').children('span').text()) == "entry"){
+						xmlnode.next().remove();
+				}
+			}
+			},
+			mouseover:function(){
+				$(this).css({"background-color":"#25AAE1"});
+			},
+			mouseout:function(){
+				$(this).css({"background-color":"#fff"});
+			}	
+			})
+			$('a').bind({
+				mouseover:function(){$(this).css({"color":"#fff"});},
+				mouseout:function(){$(this).css({"color":"#000"});},	
+			})
+		},
+		mouseover:function(){
+			$(this).prev().css("border-color","#25AAE1");
+			$(this).css("border-color","#25AAE1");	
+		},
+		mouseout:function(){
+			$(this).prev().css("border-color","#ccc");
+			$(this).css("border-color","#ccc");	
+		}
+	});
 
 })
 
