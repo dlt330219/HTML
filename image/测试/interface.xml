@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<Component name ="clm">
+    <import_interfaces>
+        <interface interface_name="interface1" >
+            <fields comp_full_name="cice">
+                <field name="field1"/>
+				<field name="field2"/>
+            </fields>
+			<fields comp_full_name="gamil">
+                <field name="field3"/>
+				<field name="field4"/>
+            </fields>
+        </interface>
+		<interface interface_name="interface1" >
+            <fields comp_full_name="cice">
+                <field name="field1"/>
+				<field name="field2"/>
+            </fields>
+			<fields comp_full_name="gamil">
+                <field name="field3"/>
+				<field name="field4"/>
+            </fields>
+        </interface>
+    </import_interfaces>
+	<export_interfaces>
+        <interface interface_name="interface3" >
+            <fields comp_full_name="lnd">
+                <field name="field5"/>
+				<field name="field6"/>
+            </fields>
+			<fields comp_full_name="c_coupler">
+                <field name="field7"/>
+				<field name="field8"/>
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

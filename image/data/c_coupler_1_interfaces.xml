@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<Component component_id="1">
+    <import_interfaces>
+        <interface name="receive_from_OCN" id="150994944">
+            <fields />
+            <field name="t" field_id="117440516" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="receive_from_LND" id="150994946">
+            <fields />
+            <field name="t" field_id="117440518" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="receive_from_SICE" id="150994947">
+            <fields />
+            <field name="t" field_id="117440520" />
+            <field name="ifrac" field_id="117440519" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="receive_from_ATM" id="150994949">
+            <fields />
+            <field name="tbot" field_id="117440522" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="Default_IO_write" id="150994959">
+            <fields />
+            <field name="TBOT" field_id="117440560" />
+            <timers>
+                <timer frequency_count="1" frequency_unit="days" delay_count="0" />
+            </timers>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface name="send_OCN" id="150994945">
+            <fields />
+            <field name="sst" field_id="117440517" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="send_merge_data" id="150994948">
+            <fields />
+            <field name="t" field_id="117440521" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="send_ATM_data" id="150994950">
+            <fields />
+            <field name="tbot" field_id="117440522" />
+            <timers>
+                <timer frequency_count="25200" frequency_unit="seconds" delay_count="14400" />
+            </timers>
+        </interface>
+        <interface name="Default_IO_output" id="150994958">
+            <fields />
+            <field name="TBOT" field_id="117440523" />
+            <timers>
+                <timer frequency_count="1" frequency_unit="days" delay_count="0" />
+            </timers>
+        </interface>
+    </export_interfaces>
+</Component>

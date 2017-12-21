@@ -1,0 +1,107 @@
+.component_blue_background1 {
+	position: relative;
+	padding-right: 100px;
+	padding-left: 100px;
+	display: inline-block;
+	font-family: "Courier New", Courier, monospace;
+}
+.component_blue_background2 {
+	position: relative;
+	padding-right: -10px;
+	padding-left: 40px;
+	display: inline-block;
+	font-family: "Courier New", Courier, monospace;
+	margin-top: 1px;
+}
+.component_blue_background3 {
+	position: relative;
+	padding-right: -10px;
+	padding-left: 10px;
+	display: inline-block;
+	font-family: "Courier New", Courier, monospace;
+	margin-top: 1px;
+}
+.component_name1 {
+	position: absolute;
+	float: left;
+	top: 30px;
+	left: 120px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 24px;
+}
+.component_name2 {
+	position: absolute;
+	float: left;
+	top: 30px;
+	left: 50px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 24px;
+}
+.component_name3 {
+	position: absolute;
+	float: left;
+	top: 30px;
+	left: 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 24px;
+}
+.none_display_menu {
+	position: absolute;
+	left: 175px;
+	top: 30px;
+	display: none;
+}
+.display_menu {
+	position: absolute;
+	left: 175px;
+	top: 30px;
+	z-index:999;
+}
+.words {
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: small-caps;
+	text-transform: capitalize;
+}
+table {
+	border: 1px double #CCC;
+	cellspacing: 3px;
+	background-color: #FFF;
+	font-size: 16px;
+	font-style: normal;
+	font-family: "微软雅黑";
+	font-weight: normal;
+}
+table tr:hover{
+	background-color: #68ABE4
+}
+.button{
+	font-family: "微软雅黑";
+	float: right;
+	padding-right: 100px;
+	padding-top: 20px;
+	color:#68ABE4;
+	display:block;
+}
+.undisplay{
+	display:none;
+}
+.arrow1 { 
+position: absolute;
+margin-left:-10px;   
+transform: rotate(40deg); 
+-o-transform: rotate(40deg); 
+-webkit-transform: rotate(40deg); 
+-moz-transform: rotate(40deg); 
+filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1.2660444431189777,M12=-0.3327876096865394,M21=0.1127876096865398, M22=0.9660444431189779); 
+} 
+.arrow2 { 
+position: absolute; 
+margin-left:10px;
+transform: rotate(320deg); 
+-o-transform: rotate(320deg); 
+-webkit-transform: rotate(320deg); 
+-moz-transform: rotate(320deg); 
+filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11=0.7660444431189777,M12=-0.6427876096865394,M21=0.6427876096865398,M22=0.7660444431189779); 
+} 

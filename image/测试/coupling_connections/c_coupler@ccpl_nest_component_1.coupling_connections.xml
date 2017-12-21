@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<root>
+<local_import_interfaces>
+   <import_interface  name="receive_from_OCN"  status="on">
+       <import_connection status="on">
+           <fields status="on" default="all">
+           </fields>
+           <components status="on" default="off">
+              <component comp_full_name="licom" />
+           </components>
+       </import_connection>
+       <import_connection status="off">
+           <fields status="on" default="off">
+           </fields>
+       </import_connection>
+   </import_interface>
+   <import_interface  name="receive_from_ATM"  status="on">
+       <import_connection status="on">
+           <fields status="on" default="all">
+           </fields>
+           <components status="on" default="off">
+              <component comp_full_name="gamil@gamil_nest_component_1" interface_name="send_data_to_CPL"  />
+           </components>
+       </import_connection>
+       <import_connection status="off">
+           <fields status="on" default="off">
+           </fields>
+       </import_connection>
+   </import_interface>
+   <import_interface  name="receive_from_SICE"  status="on">
+       <import_connection status="on">
+           <fields status="on" default="all">
+           </fields>
+           <components status="on" default="off">
+              <component comp_full_name="cice" />
+           </components>
+       </import_connection>
+       <import_connection status="off">
+           <fields status="on" default="off">
+           </fields>
+       </import_connection>
+   </import_interface>
+   <import_interface  name="receive_from_LND"  status="on">
+       <import_connection status="on">
+           <fields status="on" default="all">
+           </fields>
+           <components status="on" default="off">
+              <component comp_full_name="clm" />
+           </components>
+       </import_connection>
+       <import_connection status="off">
+           <fields status="on" default="off">
+           </fields>
+       </import_connection>
+   </import_interface>
+</local_import_interfaces>
+<local_grids>
+    <grids_entry local_grid_name="remote_atm_grid"  another_comp_full_name="gamil@gamil_nest_component_1"   another_comp_grid_name="gamil_H2D_grid" />
+</local_grids>
+
+<component_full_names_sets>
+   <component_full_names_set  status="on" keyword="external_comps_for_atm_interface" >
+       <component_entry comp_full_name="gamil@gamil_nest_component_1"/>
+   </component_full_names_set>
+</component_full_names_sets>
+
+</root>
+
