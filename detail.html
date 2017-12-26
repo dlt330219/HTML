@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>component interface detail</title>
+<style type="text/css">
+table.hovertable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.hovertable th {
+	background-color:#c3dde0;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.hovertable tr {
+	background-color:#d4e3e5;
+}
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+.tablename{
+	padding-top:15px;
+	padding-bottom:5px;
+}
+</style>
+
+<script src="javascript/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+function GetQueryString(name)
+	{
+		 var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		 var r = window.location.search.substr(1).match(reg);
+		 if(r!=null)return  unescape(r[2]); return null;
+	}
+$(document).ready(function() {  
+    var rela=GetQueryString("rela");  
+    if(rela!=null){  
+		$('#detail').after(rela); 
+    }  
+});
+$(function(){
+$('tr').bind({
+	mouseover:function(){
+		$(this).css({"background-color":"#ffff66"});
+	},
+	mouseout:function(){
+		$(this).css({"background-color":"#d4e3e5"});
+	}	
+});
+})
+</script>
+</head>
+
+<body>
+<div id='detail'>
+</div>
+</body>
+</html>

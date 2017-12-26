@@ -60,7 +60,12 @@ var edges_line = svg.selectAll("edges_line")
     .style("stroke-width",1.0)//线条粗细
     .attr("marker-end", "url(#resolved)" )//根据箭头标记的id号标记箭头
 	.on("click",function(d){
-		alert(d.rela)
+		//alert(d.rela)
+		var height = 400;
+		var width = 600;
+		var top = (window.screen.availHeight - 30 - height) / 2;
+		var left = (window.screen.availWidth - 10 - width) / 2;
+		window.open('detail.html?rela=' + d.rela,'interface detail', 'height='+ height +', width='+ width +',top='+ top  + ',left='+ left +', toolbar=no,location=no,scrollbars=yes');
 	});
 	/*
 	//设置连接线上的文字
@@ -121,6 +126,7 @@ var circle = svg.append("g").selectAll("circle")
 			return "#999";
 		})
     })
+	/*
 	.on("mouseover",function(node){
 		edges_text.style("fill-opacity",function(line){
 			if(line.source.name==node.name || line.target.name==node.name)
@@ -132,7 +138,7 @@ var circle = svg.append("g").selectAll("circle")
 			if(line.source.name==node.name || line.target.name==node.name)
 			return 0.0;
 		})
-	})
+	})*/
     .call(force.drag);//将当前选中的元素传到drag函数中，使顶点可以被拖动
     /*
      circle.append("text")  
@@ -282,21 +288,29 @@ function transform2(d) {
 function uploadFile(node,import_nodes,export_nodes){
 	var comp_name = $(node).attr('name');
 	currentNode = comp_name;
-	$(import_nodes).children().each(function(index, element) {
-		var import_interface_name = $(this).attr('interface_name');
-		$(this).children().each(function(index, element) {
-			var rela = "import_interface:\n" + import_interface_name +': ';
+	$(import_nodes).children().each(function(index, element) {//import_interface
+		var dst_interface = $(this).attr('interface_name');
+		$(this).children().each(function(index, element) {//fields
+			var rela = '';
+			var fields_node_comp_name = $(this).attr('comp_full_name');
+			var src_interface = $(this).attr('interface_name');
+			var temp = '<tr><td>'+ src_interface +'</td><td>' + dst_interface +'</td><td>';
+			rela += '<div class="tablename">imported by ' + comp_name + ' from ' + fields_node_comp_name + '</div><table class="hovertable"><tr><th>src interface name</th><th>dst interface name</th><th>field name</th></tr>';
+			
 			$(this).children().each(function(index, element) {
 				if(index != 0)
-					rela += ", ";
-                rela += $(this).attr('name') + ' ';
+					temp += ", ";
+                temp += $(this).attr('name') + ' ';
             });
-			rela += '\n';
-            var fields_node_comp_name = $(this).attr('comp_full_name');
+			temp += '</td></tr>'
+			rela += temp;
+			rela += '</table>';
 			var has_link = false;
 			for(var i = 0; i < links.length; i++){
 				if($.trim(links[i]["source"]) == $.trim(fields_node_comp_name) && $.trim(links[i]["target"]) == $.trim(comp_name)){
-					links[i]["rela"] += rela;
+					links[i]["rela"] = $.trim(links[i]["rela"]).substring(0,$.trim(links[i]["rela"]).length-8);
+					links[i]["rela"] += temp;
+					links[i]["rela"] += '</table>'
 					//alert(links[i]["rela"])
 					has_link = true;
 					break;
@@ -307,20 +321,26 @@ function uploadFile(node,import_nodes,export_nodes){
         });
 	});
 	$(export_nodes).children().each(function(index, element) {
-		var export_interface_name = $(this).attr('interface_name');
+		var src_interface = $(this).attr('interface_name');
 		$(this).children().each(function(index, element) {
-			var rela = "export_interface:\n" + export_interface_name +': ';
+			var rela = '';
+            var fields_node_comp_name = $(this).attr('comp_full_name');
+			var dst_interface = $(this).attr('interface_name');
+			var temp = '<tr><td>'+ src_interface +'</td><td>' + dst_interface +'</td><td>';
+			rela += '<div class="tablename">exported by ' + comp_name + ' to ' + fields_node_comp_name + '</div><table class="hovertable"><tr><th>src interface name</th><th>dst interface name</th><th>field name</th></tr>';
 			$(this).children().each(function(index, element) {
 				if(index != 0)
-					rela += ", ";
-                rela += $(this).attr('name') + ' ';
+					temp += ", ";
+                temp += $(this).attr('name') + ' ';
             });
-			rela += '\n';
-            var fields_node_comp_name = $(this).attr('comp_full_name');
+			temp += '</td></tr>';
+			rela += temp + '</table>';
 			var has_link = false;
 			for(var i = 0; i < links.length; i++){
 				if($.trim(links[i]["target"]) == $.trim(fields_node_comp_name) && $.trim(links[i]["source"]) == $.trim(comp_name)){
-					links[i]["rela"] += rela;
+					links[i]["rela"] = $.trim(links[i]["rela"]).substring(0,$.trim(links[i]["rela"]).length-8);
+					links[i]["rela"] += temp;
+					links[i]["rela"] += '</table>'
 					//alert(links[i]["rela"])
 					has_link = true;
 					break;
@@ -341,9 +361,12 @@ function uploadFile(node,import_nodes,export_nodes){
 					flag = true;
 				}
 			}
-			if(flag){
+			if(flag && !has_link){
 				links[a]["rela"] = link2 + link1;
 				links[b]["rela"] = link2 + link1;
+			} 
+			if(flag && has_link){
+				links[b]["rela"] = links[a]["rela"]
 			}
         });
 	});
@@ -357,20 +380,6 @@ function parseXmlStr(xmlStr){
 		return;
 	}
 	//init links
-	links.push({source: "clm", target: "licom", rela:"interface1->interface2"});
-links.push({source: "cice", target: "licom_nest_component_2", rela:"value1->value2"})
-links.push({source: "licom", target: "cice",  rela:"interface1->interface2"})
-links.push({source: "licom_nest_component_2", target: "licom",  rela:"value1->value2"})
-links.push({source: "licom_nest_component_1", target: "gamil",  rela:"value1->value2"})
-links.push({source: "gamil", target: "gamil_nest_component_2", rela:"interface1->interface2"})
-links.push({source: "gamil_nest_component_2", target: "gamil", rela:"value1->value2"})
-links.push({source: "gamil_nest_component_1", target: "cice", rela:"value1->value2"})
-links.push({source: "c_coupler", target: "clm", rela:"interface1->interface2"})
-links.push({source: "c_coupler", target: "cice", rela:"value1->value2"})
-links.push({source: "c_coupler", target: "gamil_nest_component_1", rela:"value1->value2"})
-links.push({source: "c_coupler", target: "licom", rela:"interface1->interface2"})
-links.push({source: "c_coupler", target: "gamil", rela:"value1->value2"})
-links.push({source: "clm", target: "gamil", rela:"interface1->interface2"})
 	var length = links.length;
 	for (var i = 0; i < length; i++) {
 		links.pop();
