@@ -24,17 +24,26 @@ table.hovertable td {
 	border-style: solid;
 	border-color: #a9c6c9;
 }
+#svg{
+	float:left;
+	font-family:"Times New Roman", Times, serif;
+	
+}
 #detail{
-	width: 40%;
-    height: 300px;
+	width: auto;
+    height: auto;
     box-shadow: 0 7px 30px rgba(0,0,0,.3);
     float: right;
     position: fixed;
     padding-left: 25px;
+	padding-bottom:25px;
+	padding-right:25px;
     margin-top: 4%;
-    margin-left: 15%;
+    margin-left: 10%;
+	margin-right:10%;
     background: #fff;
 	overflow: auto;
+	text-align:left;
 }
 .tablename{
 	padding-top:15px;
@@ -103,4 +112,7 @@ text {
 .linetext {
     font-size: 12px Microsoft YaHei;
 	fill-opacity:0.0;
+}
+body{
+	text-align:center;
 }

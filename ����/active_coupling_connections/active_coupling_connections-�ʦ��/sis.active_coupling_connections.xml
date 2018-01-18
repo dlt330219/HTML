@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<Component name="sis">
+    <import_interfaces>
+        <interface interface_name="sis_import_interface">
+            <fields comp_full_name="cpl" interface_name="cpl_ice_export_interface">
+                <field name="sst" />
+                <field name="p_surf" />
+                <field name="roff" />
+                <field name="pslv" />
+                <field name="lwdn" />
+                <field name="snow" />
+                <field name="rain" />
+                <field name="swvdf" />
+                <field name="swndf" />
+                <field name="swvdr" />
+                <field name="swndr" />
+                <field name="pbot" />
+                <field name="dens" />
+                <field name="shum" />
+                <field name="tbot" />
+                <field name="ptem" />
+                <field name="v_atm_bot" />
+                <field name="u_atm_bot" />
+                <field name="z_atm_bot" />
+                <field name="q" />
+                <field name="dhdx" />
+                <field name="v_ocn_srf" />
+                <field name="u_ocn_srf" />
+                <field name="s_ocn_srf" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="sis_export_interface">
+            <fields comp_full_name="cpl" interface_name="cpl_ice_import_interface">
+                <field name="ifrac" />
+                <field name="v10" />
+                <field name="u10" />
+                <field name="p_osurf" />
+                <field name="iotauy" />
+                <field name="iotaux" />
+                <field name="salt_flux" />
+                <field name="swpen" />
+                <field name="melth" />
+                <field name="evap" />
+                <field name="meltw" />
+                <field name="qref" />
+                <field name="tref" />
+                <field name="swnet" />
+                <field name="lwup" />
+                <field name="heat_srf_flux_sen" />
+                <field name="heat_srf_flux_latent" />
+                <field name="wtauy" />
+                <field name="wtaux" />
+                <field name="anidf" />
+                <field name="avsdf" />
+                <field name="anidr" />
+                <field name="avsdr" />
+                <field name="t" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

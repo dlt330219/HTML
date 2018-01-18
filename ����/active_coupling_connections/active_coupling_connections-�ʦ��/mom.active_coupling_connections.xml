@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<Component name="mom">
+    <import_interfaces>
+        <interface interface_name="mom_import_interface">
+            <fields comp_full_name="cpl" interface_name="cpl_ocn_export_interface">
+                <field name="wtaux" />
+                <field name="dedt" />
+                <field name="co2" />
+                <field name="pslv" />
+                <field name="meltw" />
+                <field name="roff" />
+                <field name="snow" />
+                <field name="rain" />
+                <field name="swnet" />
+                <field name="lwnet" />
+                <field name="salt_flux" />
+                <field name="evap" />
+                <field name="heat_srf_flux_sen" />
+                <field name="wtauy" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="mom_export_interface">
+            <fields comp_full_name="cpl" interface_name="cpl_ocn_import_interface">
+                <field name="sst" />
+                <field name="carbon_flux" />
+                <field name="q" />
+                <field name="dhdx" />
+                <field name="v_ocn_srf" />
+                <field name="u_ocn_srf" />
+                <field name="s_ocn_srf" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

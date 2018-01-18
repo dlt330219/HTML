@@ -1,0 +1,189 @@
+<?xml version="1.0" ?>
+<Component name="cpl">
+    <import_interfaces>
+        <interface interface_name="cpl_ice_import_interface">
+            <fields comp_full_name="sis" interface_name="sis_export_interface">
+                <field name="ifrac" />
+                <field name="v10" />
+                <field name="u10" />
+                <field name="p_osurf" />
+                <field name="iotauy" />
+                <field name="iotaux" />
+                <field name="salt_flux" />
+                <field name="swpen" />
+                <field name="melth" />
+                <field name="evap" />
+                <field name="meltw" />
+                <field name="qref" />
+                <field name="tref" />
+                <field name="swnet" />
+                <field name="lwup" />
+                <field name="heat_srf_flux_sen" />
+                <field name="heat_srf_flux_latent" />
+                <field name="wtauy" />
+                <field name="wtaux" />
+                <field name="anidf" />
+                <field name="avsdf" />
+                <field name="anidr" />
+                <field name="avsdr" />
+                <field name="t" />
+            </fields>
+        </interface>
+        <interface interface_name="cpl_lnd_import_interface">
+            <fields comp_full_name="bccavim" interface_name="bccavim_export_interface">
+                <field name="t" />
+                <field name="roff" />
+                <field name="v10" />
+                <field name="u10" />
+                <field name="carbon_flux" />
+                <field name="qref" />
+                <field name="swnet" />
+                <field name="tref" />
+                <field name="evap" />
+                <field name="lwup" />
+                <field name="heat_srf_flux_sen" />
+                <field name="heat_srf_flux_latent" />
+                <field name="wtauy" />
+                <field name="wtaux" />
+                <field name="snowh" />
+                <field name="anidf" />
+                <field name="avsdf" />
+                <field name="anidr" />
+                <field name="avsdr" />
+            </fields>
+        </interface>
+        <interface interface_name="cpl_ocn_import_interface">
+            <fields comp_full_name="mom" interface_name="mom_export_interface">
+                <field name="sst" />
+                <field name="carbon_flux" />
+                <field name="q" />
+                <field name="dhdx" />
+                <field name="v_ocn_srf" />
+                <field name="u_ocn_srf" />
+                <field name="s_ocn_srf" />
+            </fields>
+        </interface>
+        <interface interface_name="cpl_atm_import_interface">
+            <fields comp_full_name="bccam" interface_name="bccam_export_interface">
+                <field name="z_atm_bot" />
+                <field name="albshift" />
+                <field name="co2" />
+                <field name="p_surf" />
+                <field name="swvdf" />
+                <field name="swndf" />
+                <field name="swvdr" />
+                <field name="swndr" />
+                <field name="snowl" />
+                <field name="snowc" />
+                <field name="rainl" />
+                <field name="rainc" />
+                <field name="lwdn" />
+                <field name="swnet" />
+                <field name="dens" />
+                <field name="shum" />
+                <field name="pslv" />
+                <field name="pbot" />
+                <field name="ptem" />
+                <field name="tbot" />
+                <field name="v_atm_bot" />
+                <field name="u_atm_bot" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="cpl_ocn_export_interface">
+            <fields comp_full_name="mom" interface_name="mom_import_interface">
+                <field name="wtaux" />
+                <field name="dedt" />
+                <field name="co2" />
+                <field name="pslv" />
+                <field name="meltw" />
+                <field name="roff" />
+                <field name="snow" />
+                <field name="rain" />
+                <field name="swnet" />
+                <field name="lwnet" />
+                <field name="salt_flux" />
+                <field name="evap" />
+                <field name="heat_srf_flux_sen" />
+                <field name="wtauy" />
+            </fields>
+        </interface>
+        <interface interface_name="cpl_lnd_export_interface">
+            <fields comp_full_name="bccavim" interface_name="bccavim_import_interface">
+                <field name="z_atm_bot" />
+                <field name="co2" />
+                <field name="swvdf" />
+                <field name="swndf" />
+                <field name="swvdr" />
+                <field name="swndr" />
+                <field name="snowl" />
+                <field name="snowc" />
+                <field name="rainl" />
+                <field name="rainc" />
+                <field name="lwdn" />
+                <field name="tbot" />
+                <field name="pbot" />
+                <field name="shum" />
+                <field name="ptem" />
+                <field name="v_atm_bot" />
+                <field name="u_atm_bot" />
+            </fields>
+        </interface>
+        <interface interface_name="cpl_ice_export_interface">
+            <fields comp_full_name="sis" interface_name="sis_import_interface">
+                <field name="sst" />
+                <field name="p_surf" />
+                <field name="roff" />
+                <field name="pslv" />
+                <field name="lwdn" />
+                <field name="snow" />
+                <field name="rain" />
+                <field name="swvdf" />
+                <field name="swndf" />
+                <field name="swvdr" />
+                <field name="swndr" />
+                <field name="pbot" />
+                <field name="dens" />
+                <field name="shum" />
+                <field name="tbot" />
+                <field name="ptem" />
+                <field name="v_atm_bot" />
+                <field name="u_atm_bot" />
+                <field name="z_atm_bot" />
+                <field name="q" />
+                <field name="dhdx" />
+                <field name="v_ocn_srf" />
+                <field name="u_ocn_srf" />
+                <field name="s_ocn_srf" />
+            </fields>
+        </interface>
+        <interface interface_name="cpl_atm_export_interface">
+            <fields comp_full_name="bccam" interface_name="bccam_import_interface">
+                <field name="wtaux" />
+                <field name="t_lnd" />
+                <field name="t_ice" />
+                <field name="t_ocn" />
+                <field name="v10" />
+                <field name="u10" />
+                <field name="carbon_flux" />
+                <field name="sst" />
+                <field name="qref" />
+                <field name="tref" />
+                <field name="ofrac" />
+                <field name="ifrac" />
+                <field name="snowh" />
+                <field name="t" />
+                <field name="anidf" />
+                <field name="avsdf" />
+                <field name="anidr" />
+                <field name="avsdr" />
+                <field name="evap" />
+                <field name="lwup" />
+                <field name="heat_srf_flux_sen" />
+                <field name="heat_srf_flux_latent" />
+                <field name="wtauy" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

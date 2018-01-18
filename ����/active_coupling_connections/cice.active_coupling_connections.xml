@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<Component name="cice">
+    <import_interfaces>
+        <interface interface_name="recv_data_from_CPL">
+            <fields comp_full_name="c_coupler" interface_name="send_ATM_data">
+                <field name="tbot" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="send_data_to_CPL">
+            <fields comp_full_name="c_coupler@ccpl_nest_component_1" interface_name="receive_from_SICE">
+                <field name="t" />
+                <field name="ifrac" />
+            </fields>
+            <fields comp_full_name="c_coupler" interface_name="receive_from_SICE">
+                <field name="t" />
+                <field name="ifrac" />
+            </fields>
+            <fields comp_full_name="c_coupler@ccpl_nest_component_2" interface_name="receive_from_SICE">
+                <field name="t" />
+                <field name="ifrac" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

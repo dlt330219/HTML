@@ -41,7 +41,7 @@ if($("#svg").length > 0){
 }
 var svg = d3.select("body").append("svg")
 	.attr("id","svg")
-    .attr("width", width)
+    .attr("width", '100%')
     .attr("height", height);
 
 //箭头
@@ -323,11 +323,6 @@ function is_valid(node,index,length,parentNode){
 	else if(nodeName == 'import_interfaces' || nodeName == 'export_interfaces'){
 		if(parentNode != 'Component'){
 			alert("Parse failed! The parentNode of field '" + nodeName + "' must be the 'Component', not the '" + parentNode + "'!");
-			isValid = false;
-			return;
-		}
-		if(length != 1){
-			alert("Parse failed! The field '" + nodeName + "' must be have only one, please check!");
 			isValid = false;
 			return;
 		}

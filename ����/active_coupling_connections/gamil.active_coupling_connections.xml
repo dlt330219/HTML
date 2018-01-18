@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<Component name="gamil">
+    <import_interfaces>
+        <interface interface_name="receive_data_from_CPL">
+            <fields comp_full_name="c_coupler" interface_name="send_merge_data">
+                <field name="t" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="send_data_to_CPL_fixed">
+            <fields comp_full_name="c_coupler" interface_name="receive_from_ATM_fixed">
+                <field name="u_atm_bot" />
+                <field name="tbot" />
+            </fields>
+        </interface>
+        <interface interface_name="send_data_to_CPL">
+            <fields comp_full_name="c_coupler" interface_name="receive_from_ATM">
+                <field name="u_atm_bot" />
+                <field name="tbot" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

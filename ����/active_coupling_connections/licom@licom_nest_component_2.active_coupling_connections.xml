@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<Component name="licom@licom_nest_component_2">
+    <import_interfaces>
+        <interface interface_name="receive_ATM_data">
+            <fields comp_full_name="c_coupler@ccpl_nest_component_2" interface_name="send_ATM_data">
+                <field name="tbot" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="send_OCN_data">
+            <fields comp_full_name="c_coupler@ccpl_nest_component_2" interface_name="receive_from_OCN">
+                <field name="t" />
+                <field name="sss" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

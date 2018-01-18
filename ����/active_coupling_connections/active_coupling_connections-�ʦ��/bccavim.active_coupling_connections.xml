@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<Component name="bccavim">
+    <import_interfaces>
+        <interface interface_name="bccavim_import_interface">
+            <fields comp_full_name="cpl" interface_name="cpl_lnd_export_interface">
+                <field name="z_atm_bot" />
+                <field name="co2" />
+                <field name="swvdf" />
+                <field name="swndf" />
+                <field name="swvdr" />
+                <field name="swndr" />
+                <field name="snowl" />
+                <field name="snowc" />
+                <field name="rainl" />
+                <field name="rainc" />
+                <field name="lwdn" />
+                <field name="tbot" />
+                <field name="pbot" />
+                <field name="shum" />
+                <field name="ptem" />
+                <field name="v_atm_bot" />
+                <field name="u_atm_bot" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="bccavim_export_interface">
+            <fields comp_full_name="cpl" interface_name="cpl_lnd_import_interface">
+                <field name="t" />
+                <field name="roff" />
+                <field name="v10" />
+                <field name="u10" />
+                <field name="carbon_flux" />
+                <field name="qref" />
+                <field name="swnet" />
+                <field name="tref" />
+                <field name="evap" />
+                <field name="lwup" />
+                <field name="heat_srf_flux_sen" />
+                <field name="heat_srf_flux_latent" />
+                <field name="wtauy" />
+                <field name="wtaux" />
+                <field name="snowh" />
+                <field name="anidf" />
+                <field name="avsdf" />
+                <field name="anidr" />
+                <field name="avsdr" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>

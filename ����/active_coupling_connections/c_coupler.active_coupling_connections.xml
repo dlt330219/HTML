@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<Component name="c_coupler">
+    <import_interfaces>
+        <interface interface_name="receive_from_ATM_fixed">
+            <fields comp_full_name="gamil" interface_name="send_data_to_CPL_fixed">
+                <field name="u_atm_bot" />
+                <field name="tbot" />
+            </fields>
+        </interface>
+        <interface interface_name="receive_from_ATM">
+            <fields comp_full_name="gamil" interface_name="send_data_to_CPL">
+                <field name="u_atm_bot" />
+                <field name="tbot" />
+            </fields>
+        </interface>
+        <interface interface_name="receive_from_OCN">
+            <fields comp_full_name="licom" interface_name="send_OCN_data">
+                <field name="t" />
+                <field name="sss" />
+            </fields>
+        </interface>
+        <interface interface_name="receive_from_SICE">
+            <fields comp_full_name="cice" interface_name="send_data_to_CPL">
+                <field name="t" />
+                <field name="ifrac" />
+            </fields>
+        </interface>
+    </import_interfaces>
+    <export_interfaces>
+        <interface interface_name="send_merge_data">
+            <fields comp_full_name="gamil" interface_name="receive_data_from_CPL">
+                <field name="t" />
+            </fields>
+        </interface>
+        <interface interface_name="send_ATM_data">
+            <fields comp_full_name="licom" interface_name="receive_ATM_data">
+                <field name="tbot" />
+            </fields>
+            <fields comp_full_name="cice" interface_name="recv_data_from_CPL">
+                <field name="tbot" />
+            </fields>
+        </interface>
+    </export_interfaces>
+</Component>
