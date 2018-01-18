@@ -1,4 +1,31 @@
 $(function(){
+	var isValid = true;
+	function is_valid(node,index,length,parentNode){
+	var nodeName = node.nodeName;
+	if(nodeName == 'Components'){}
+	else if(nodeName == 'Online_Model'){
+		if(parentNode != 'Components' && parentNode != 'Online_Model'){
+			alert("Parse failed! The parentNode of field '" + nodeName + "' must be 'Online_Model' or the 'Components', not the '" + parentNode + "'!");
+			isValid = false;
+			return;
+		}
+		
+	}
+	else{
+		alert("A wrong node '" + nodeName + "' in upload file， please check the file !");
+		isValid = false;
+		return;
+	}
+	
+	
+	var length = $(node).children().length;
+	$(node).children().each(function(index, element) {
+		if(isValid){
+        	is_valid($(node).children().get(index),index,length,nodeName);
+		}
+    });
+	
+}
 	var after_str = "";
 	function uploadFile(node){
 		var name = $(node).attr('full_name');
@@ -21,6 +48,15 @@ $(function(){
 	}catch(err){
 		alert("Plese upload a well-formed xml file!");
 		window.location.reload();
+		return;
+	}
+	if($(xml).find('Components').length == 0 ){
+		alert("The file must have one root node 'Components', Please check! ");
+		return ;
+	}
+	is_valid($(xml).find('Components').get(0),0,1,"");
+	if(!isValid){
+		isValid = true;
 		return;
 	}
 	uploadFile($(xml).find('Online_Model').get(0))

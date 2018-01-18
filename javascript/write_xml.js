@@ -562,7 +562,7 @@ $(function(){
 		xml += '</component_full_names_sets>\n</root>';
 		
 		saveTextAs(xml,fileName);
-		window.location.reload();
+		//window.location.reload();
 	}
 	function writeRemapping(){
 		var isNull = false;
@@ -625,7 +625,7 @@ $(function(){
 		xml += '</root>';
 		
 		saveTextAs(xml,fileName);
-		window.location.reload();
+		//window.location.reload();
 	}
 
 	

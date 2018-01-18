@@ -1,5 +1,48 @@
 @charset "utf-8";
 /* CSS Document */
+table.hovertable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.hovertable th {
+	background-color:#c3dde0;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.hovertable tr {
+	background-color:#d4e3e5;
+}
+table.hovertable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+#detail{
+	width: 40%;
+    height: 300px;
+    box-shadow: 0 7px 30px rgba(0,0,0,.3);
+    float: right;
+    position: fixed;
+    padding-left: 25px;
+    margin-top: 4%;
+    margin-left: 15%;
+    background: #fff;
+	overflow: auto;
+}
+.tablename{
+	padding-top:15px;
+	padding-bottom:5px;
+}
+.undisplay{
+	display:none;
+}
 .control-label{
 	width: 93px;
 	padding-right: 0;

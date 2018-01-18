@@ -1,5 +1,19 @@
 // JavaScript Document
 $(function(){
+	$(document).bind("click",function(e){
+		var e = e || window.event;
+		var target = $(e.target) || $(e.srcElement);
+		if($.trim(target.attr('id')).substring(0,8) != 'edgepath' 
+			&& target.attr('id') != 'detail' && target.parent().attr('id') != 'detail'
+			&& !target.hasClass('hovertable')
+			&& !target.parent().hasClass('hovertable')
+			&& !target.parent().hasClass('hovertable')
+			&& !target.parent().parent().parent().hasClass('hovertable')){
+			if(!$('#detail').hasClass("undisplay")){
+				$('#detail').addClass('undisplay'); 
+			}
+		}
+	})
 var links = [];
 var currentNode;
 function connection(){
@@ -12,7 +26,7 @@ links.forEach(function(link) {
 });
 
 var width = 800,
-    height = 800;
+    height = 600;
 
 var force = d3.layout.force()//layout将json格式转化为力学图可用的格式
     .nodes(d3.values(nodes))//设定节点数组
@@ -60,12 +74,13 @@ var edges_line = svg.selectAll("edges_line")
     .style("stroke-width",1.0)//线条粗细
     .attr("marker-end", "url(#resolved)" )//根据箭头标记的id号标记箭头
 	.on("click",function(d){
-		//alert(d.rela)
+		showDetail(d.rela)
+		/*
 		var height = 400;
 		var width = 600;
 		var top = (window.screen.availHeight - 30 - height) / 2;
 		var left = (window.screen.availWidth - 10 - width) / 2;
-		window.open('detail.html?rela=' + d.rela,'interface detail', 'height='+ height +', width='+ width +',top='+ top  + ',left='+ left +', toolbar=no,location=no,scrollbars=yes');
+		window.open('detail.html?rela=' + d.rela,'interface detail', 'height='+ height +', width='+ width +',top='+ top  + ',left='+ left +', toolbar=no,location=no,scrollbars=yes');*/
 	});
 	/*
 	//设置连接线上的文字
@@ -284,7 +299,78 @@ function transform2(d) {
       return "translate(" + (d.x) + "," + d.y + ")";
 }
 }
-
+function showDetail(rela){
+	$('#detail').children().each(function(index, element) {
+        $(this).remove();
+    });
+	if($('#detail').hasClass("undisplay")){
+		$('#detail').removeClass('undisplay'); 
+	}
+	$('#detail').append(rela);
+	$('tr').bind({
+		mouseover:function(){
+			$(this).css({"background-color":"#ffff66"});
+		},
+		mouseout:function(){
+			$(this).css({"background-color":"#d4e3e5"});
+		}	
+	});
+}
+var isValid = true;
+function is_valid(node,index,length,parentNode){
+	var nodeName = node.nodeName;
+	if(nodeName == 'Component'){}
+	else if(nodeName == 'import_interfaces' || nodeName == 'export_interfaces'){
+		if(parentNode != 'Component'){
+			alert("Parse failed! The parentNode of field '" + nodeName + "' must be the 'Component', not the '" + parentNode + "'!");
+			isValid = false;
+			return;
+		}
+		if(length != 1){
+			alert("Parse failed! The field '" + nodeName + "' must be have only one, please check!");
+			isValid = false;
+			return;
+		}
+	}
+	else if(nodeName == 'interface'){
+		if(parentNode != 'import_interfaces' && parentNode != 'export_interfaces'){
+			alert("Parse failed! The parentNode of field '" + nodeName + "' must be the 'import_interfaces' or the 'export_interfaces', not the '" + parentNode + "'!");
+			isValid = false;
+			return;
+		}
+		
+	}
+	else if(nodeName == 'fields'){
+		if(parentNode != 'interface'){
+			alert("Parse failed! The parentNode of field '" + nodeName + "' must be the 'interface', not the '" + parentNode + "'!");
+			isValid = false;
+			return;
+		}
+		
+	}
+	else if(nodeName == 'field'){
+		if(parentNode != 'fields'){
+			alert("Parse failed! The parentNode of field '" + nodeName + "' must be the 'fields', not the '" + parentNode + "'!");
+			isValid = false;
+			return;
+		}
+		
+	}
+	else{
+		alert("A wrong node '" + nodeName + "' in upload file， please check the file !");
+		isValid = false;
+		return;
+	}
+	
+	
+	var length = $(node).children().length;
+	$(node).children().each(function(index, element) {
+		if(isValid){
+        	is_valid($(node).children().get(index),index,length,nodeName);
+		}
+    });
+	
+}
 function uploadFile(node,import_nodes,export_nodes){
 	var comp_name = $(node).attr('name');
 	currentNode = comp_name;
@@ -384,6 +470,17 @@ function parseXmlStr(xmlStr){
 	for (var i = 0; i < length; i++) {
 		links.pop();
     }
+	
+	if($(xml).find('Component').length == 0 ){
+		alert("The file must have one root node 'Component', Please check! ");
+		return ;
+	}
+	is_valid($(xml).find('Component').get(0),0,1,"");
+	if(!isValid){
+		isValid = true;
+		return;
+	}
+	
 	uploadFile($(xml).find('Component').get(0),$(xml).find('import_interfaces').get(0),$(xml).find('export_interfaces').get(0));
 	//show connection
 	connection();

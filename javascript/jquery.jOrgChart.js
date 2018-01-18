@@ -135,7 +135,6 @@
     // Expand and contract nodes
     if ($childNodes.length > 0) {
       $nodeDiv.click(function() {
-		  alert("helllooo")
           var $this = $(this);
           var $tr = $this.closest("tr");
 
